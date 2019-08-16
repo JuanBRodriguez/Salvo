@@ -18,9 +18,8 @@ public class Player {
 
     public Player(){}
 
-    public Player(String userName, long id) { //Constructor
+    public Player(String userName) { //Constructor
         this.userName = userName;
-        this.id = id;
     }
     //Getters
     public String getUserName() {
@@ -35,6 +34,5 @@ public class Player {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
 
 }
