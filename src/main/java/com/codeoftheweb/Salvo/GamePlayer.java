@@ -1,5 +1,6 @@
 package com.codeoftheweb.Salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
 
@@ -39,9 +40,11 @@ public class GamePlayer {
     public Date getJoinDate() {
         return joinDate;
     }
+    @JsonIgnore
     public Game getGame() {
         return game;
     }
+    @JsonIgnore
     public Player getPlayer() {
         return player;
     }

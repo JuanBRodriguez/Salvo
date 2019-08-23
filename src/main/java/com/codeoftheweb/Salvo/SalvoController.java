@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -16,11 +14,33 @@ public class SalvoController {
     private GameRepository gameRepository;
 
     @RequestMapping("/games")
-    public Set<Game> getGame(Set<Game> games) {
-        return new HashSet<>(games);
+    public List<Map<String, Object>> getGames() {
+        return gameRepository.findAll()
+                                .stream()
+                                .map(Game -> makeGameDTO(Game))
+                                .collect(Collectors.toList());
     }
-    @RequestMapping("/allgames")
-    public List<Game> getAll() {
-        return gameRepository.findAll();
+
+    private Map<String, Object> makeGameDTO(Game game) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", game.getId());
+        dto.put("creationDate", game.getCreationDate().getTime());
+        dto.put("gamePlayers", getAllGamePlayer(game.getGamePlayers()) );
+        return dto;
     }
+
+    public List<Map<String, Object>> getAllGamePlayer(Set <GamePlayer> gamePlayers) {
+        return gamePlayers.stream()
+                .map(GamePlayer -> makeGamePlayerDTO(GamePlayer))
+                .collect(Collectors.toList());
+    }
+
+    private Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", gamePlayer.getId());
+        dto.put("player", gamePlayer.getPlayer().makePlayerDTO());
+        return dto;
+    }
+
+
 }
