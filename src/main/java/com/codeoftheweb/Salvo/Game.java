@@ -4,8 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -45,5 +45,17 @@ public class Game {
 
     public void setGamePlayers(Set<GamePlayer> gamePlayers) {
         this.gamePlayers = gamePlayers;
+    }
+
+    public Map<String, Object> makeGameDTO() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("id", this.getId());
+        dto.put("creationDate", this.getCreationDate().getTime());
+        dto.put("gamePlayers", this.getAllGamePlayer(this.getGamePlayers()) );
+        return dto;
+    }
+
+    public List<Map<String, Object>> getAllGamePlayer(Set <GamePlayer> gamePlayers) {
+        return gamePlayers.stream().map(GamePlayer -> GamePlayer.makeGamePlayerDTO()).collect(Collectors.toList());
     }
 }
