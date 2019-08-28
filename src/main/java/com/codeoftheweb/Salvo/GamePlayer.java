@@ -2,11 +2,9 @@ package com.codeoftheweb.Salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Entity

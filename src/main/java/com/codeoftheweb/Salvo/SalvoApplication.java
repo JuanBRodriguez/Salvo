@@ -4,7 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -15,7 +18,8 @@ public class SalvoApplication {
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository,
 									  GameRepository gameRepository,
-									  GamePlayerRepository gamePlayerRepository){
+									  GamePlayerRepository gamePlayerRepository,
+									  ShipRepository shipRepository){
 		return (args) -> {
 
 			Player p1= new Player("j.bauer@ctu.gov");
@@ -57,6 +61,31 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gp4);
 			gamePlayerRepository.save(gp5);
 			gamePlayerRepository.save(gp6);
+
+			//juego 1 1er jugador
+			List<String> pos1 = Arrays.asList("A1","A2", "A3");
+			Ship s1= new Ship("Submarine", pos1, gp1);
+			List<String> pos2 = Arrays.asList("B1","B2", "B3");
+			Ship s2= new Ship("Destroyer", pos2, gp1);
+			List<String> pos3 = Arrays.asList("F1","F2");
+			Ship s3= new Ship("Patrol Boat", pos3, gp1);
+			shipRepository.save(s1);
+			shipRepository.save(s2);
+			shipRepository.save(s3);
+
+			//juego 1 2do jugador
+			List<String> pos4 = Arrays.asList("A1","B1", "C3");
+			Ship s4= new Ship("Submarine", pos4, gp2);
+			List<String> pos5 = Arrays.asList("B8","B9", "B10");
+			Ship s5= new Ship("Destroyer", pos5, gp2);
+			List<String> pos6 = Arrays.asList("F11","F12");
+			Ship s6= new Ship("Patrol Boat", pos6, gp2);
+			shipRepository.save(s4);
+			shipRepository.save(s5);
+			shipRepository.save(s6);
+
+
+
 		};
 	}
 }
