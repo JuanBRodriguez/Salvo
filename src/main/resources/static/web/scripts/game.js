@@ -1,5 +1,5 @@
 //Referencias al Dooom
-var lista = document.getElementById("cuadricula");
+var cadri = document.getElementById("cuadricula");
 
 //variables globales
 window.addEventListener('load', function () {
@@ -18,16 +18,14 @@ window.addEventListener('load', function () {
         });
 });
 
-function cargarLista(obj){
+function cargarLista(e){
     var htmlList = "";
-    obj.forEach(e => {
-        htmlList +='<li>';
-        htmlList +=new Date(e.creationDate).toLocaleString();
-        htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(',');
-        htmlList += '<br>' + e.ships.map(function(p) { return p.type}).join(',');
-        htmlList +='</li>';
-    });
-    lista.innerHTML = htmlList;
+    htmlList +='<li>';
+    htmlList +=new Date(e.creationDate).toLocaleString();
+    htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(',');
+    htmlList += '<br>' + e.ships.map(function(p) { return p.type}).join(',');
+    htmlList +='</li>';
+    cadri.innerHTML = htmlList;
 }
 
 
