@@ -1,5 +1,6 @@
 package com.codeoftheweb.Salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -51,7 +52,7 @@ public class Ship {
     public List<String> getShipLocations() {
         return shipLocations;
     }
-
+    @JsonIgnore
     public GamePlayer getGamePlayer() {
         return gamePlayer;
     }

@@ -24,15 +24,31 @@ public class GamePlayer {
     @JoinColumn(name="player_id")
     private Player player;
 
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    private Set<Ship> ships;
+    //
     public GamePlayer() {
     }
-
     public GamePlayer(Date joinDate, Game game, Player player) {
         this.joinDate = joinDate;
         this.game = game;
         this.player = player;
     }
+    //
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
+    }
 
+    //
     public long getId() {
         return id;
     }
@@ -47,21 +63,25 @@ public class GamePlayer {
     public Player getPlayer() {
         return player;
     }
-
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
-    }
-    public void setGame(Game game) {
-        this.game = game;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
+    @JsonIgnore
+    public Set<Ship> getShips() {
+        return ships;
     }
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("player", this.getPlayer().makePlayerDTO());
+        return dto;
+    }
+
+    public Map<String, Object> makeGameViewDTO() {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("idGame", this.getId());
+        dto.put("creationDate", this.getGame().getCreationDate());
+        dto.put("gamePlayers", this.getGame().getAllGamePlayer(this.getGame().getGamePlayers()));
+        dto.put("ships", this.getShips());
+        //dto.put("salvoes", getAllSalvoes(game));
         return dto;
     }
 }
