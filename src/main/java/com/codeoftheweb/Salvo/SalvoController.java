@@ -23,6 +23,7 @@ public class SalvoController {
     @RequestMapping("/game_view/{gamePlayerId}")
     public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
         GamePlayer gamePlayer =gamePlayerRepository.getOne(gamePlayerId);
+
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("idGame", gamePlayer.getId());
         dto.put("creationDate", gamePlayer.getGame().getCreationDate());

@@ -1,5 +1,5 @@
 //Referencias al Dooom
-var cadri = document.getElementById("cuadricula");
+var cuadri = document.getElementById("cuadricula");
 
 //variables globales
 window.addEventListener('load', function () {
@@ -8,10 +8,9 @@ window.addEventListener('load', function () {
     $.get("/api/game_view/1")
         .done(function (games) {
             console.log(games)
-            cargarLista(games)
         })
-        .fail(function () {
-            console.log("Error, No se ha podido obtener")
+        .fail(function ( jqXHR, textStatus) {
+            console.log("Error, No se ha podido obtener"+ textStatus)
         })
         .always(function() {
             console.log( "finished" );
@@ -25,7 +24,7 @@ function cargarLista(e){
     htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(',');
     htmlList += '<br>' + e.ships.map(function(p) { return p.type}).join(',');
     htmlList +='</li>';
-    cadri.innerHTML = htmlList;
+    cuadri.innerHTML = htmlList;
 }
 
 
