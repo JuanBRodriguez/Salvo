@@ -18,7 +18,7 @@ public class SalvoController {
 
     @RequestMapping("/games")
     public List<Map<String, Object>> getGames() {
-        return gameRepository.findAll().stream().map(Game -> Game.makeGameDTO()).collect(Collectors.toList());
+        return gameRepository.findAll().stream().map(Game::makeGameDTO).collect(Collectors.toList());
     }
     @RequestMapping("/game_view/{gamePlayerId}")
     public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
@@ -29,6 +29,7 @@ public class SalvoController {
         dto.put("creationDate", gamePlayer.getGame().getCreationDate());
         dto.put("gamePlayers", gamePlayer.getGame().getAllGamePlayer(gamePlayer.getGame().getGamePlayers()));
         dto.put("ships", gamePlayer.getShips());
+        dto.put("salvoes", gamePlayer.getSalvos().stream().map(salvo -> salvo.makeSalvoDTO()).collect(Collectors.toList()));
         return dto;
     }
 

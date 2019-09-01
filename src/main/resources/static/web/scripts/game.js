@@ -1,31 +1,41 @@
-//Referencias al Dooom
-var cuadri = document.getElementById("cuadricula");
 
-//variables globales
 window.addEventListener('load', function () {
-
     console.log("hola termino de cargar");
-    $.get("/api/game_view/1")
-        .done(function (games) {
-            console.log(games)
-        })
-        .fail(function ( jqXHR, textStatus) {
-            console.log("Error, No se ha podido obtener"+ textStatus)
-        })
-        .always(function() {
-            console.log( "finished" );
-        });
+    loadGame();
 });
 
-function cargarLista(e){
-    var htmlList = "";
-    htmlList +='<li>';
-    htmlList +=new Date(e.creationDate).toLocaleString();
-    htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(',');
-    htmlList += '<br>' + e.ships.map(function(p) { return p.type}).join(',');
-    htmlList +='</li>';
-    cuadri.innerHTML = htmlList;
-}
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+};
 
-
-
+function loadGame() {
+    $.get('/api/game_view/'+getParameterByName('gp'))
+        .done(function(data) {
+            console.log(data);
+            let playerInfo;
+            let turnAct = 2;
+            if(data.gamePlayers[0].id === getParameterByName('gp')){
+                playerInfo = [data.gamePlayers[0].player.email, data.gamePlayers[1].player.email];
+            }
+            else {
+                playerInfo = [data.gamePlayers[1].player.email, data.gamePlayers[0].player.email];
+            }
+            $('#playerInfo').text("Partida de :"+playerInfo[0] + ' (you) vs ' + playerInfo[1]);
+            data.ships.forEach(function(ship){
+                ship.shipLocations.forEach(function(location){
+                    $('#'+location).addClass('ship-piece');
+                })
+            });
+            data.salvoes.forEach(function(s){
+                if(s.turn <= turnAct && s.player ===playerInfo[0]){
+                    s.locations.forEach(function(location){
+                        $('#'+location).addClass('salvo');
+                    })
+                }
+            });
+        })
+        .fail(function( jqXHR, textStatus ) {
+            console.log("Failed: " + textStatus );
+        });
+};
