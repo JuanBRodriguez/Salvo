@@ -28,7 +28,7 @@ function loadGame() {
                 })
             });
             data.salvoes.forEach(function(s){
-                if(s.turn <= turnAct && s.player ===playerInfo[0]){
+                if(s.player == playerInfo[0]){ //s.turn <= turnAct &&
                     s.locations.forEach(function(location){
                         $('#'+location).addClass('salvo');
                     })
