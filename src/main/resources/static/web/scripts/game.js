@@ -28,9 +28,10 @@ function loadGame() {
                 })
             });
             data.salvoes.forEach(function(s){
-                if(s.player == playerInfo[0]){ //s.turn <= turnAct &&
+                if(s.player === playerInfo[0]){ //s.turn <= turnAct &&
                     s.locations.forEach(function(location){
-                        $('#'+location).addClass('salvo');
+                        console.log(location);
+                        $('#'+location+"s").css("background-color", "crimson");//addClass('salvo');
                     })
                 }
             });

@@ -12,5 +12,6 @@
 body{
 }
 table{
-heigh
+    height: 200px;
+    width: 200px;
 }
