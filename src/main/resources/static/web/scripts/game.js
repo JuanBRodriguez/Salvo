@@ -15,7 +15,7 @@ function loadGame() {
             console.log(data);
             let playerInfo;
             let turnAct = 2;
-            if(data.gamePlayers[0].id === getParameterByName('gp')){
+            if(data.gamePlayers[0].id == getParameterByName('gp')){
                 playerInfo = [data.gamePlayers[0].player.email, data.gamePlayers[1].player.email];
             }
             else {
@@ -24,14 +24,30 @@ function loadGame() {
             $('#playerInfo').text("Partida de :"+playerInfo[0] + ' (you) vs ' + playerInfo[1]);
             data.ships.forEach(function(ship){
                 ship.shipLocations.forEach(function(location){
-                    $('#'+location).addClass('ship-piece');
+                    $('#'+location).css("background-color", "grey");//.addClass('ship-piece');
                 })
             });
             data.salvoes.forEach(function(s){
                 if(s.player === playerInfo[0]){ //s.turn <= turnAct &&
                     s.locations.forEach(function(location){
-                        console.log(location);
+                        //console.log(location);
                         $('#'+location+"s").css("background-color", "crimson");//addClass('salvo');
+                    })
+                }
+            });
+            data.salvoes.forEach(function(s){
+                if(s.player == playerInfo[1]){ //s.turn <= turnAct &&
+                    s.locations.forEach(function(location){
+                        console.log(location);
+                        data.ships.forEach(function(ship){
+                            ship.shipLocations.forEach(function(locShip){
+                                if(locShip==location){
+                                $('#'+location).css("background-color", "darkmagenta");
+                                console.log("Disparo en "+location+" a dado en el blanco!");
+                                }
+                            })
+                        });
+
                     })
                 }
             });
