@@ -20,13 +20,16 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    private Set<Score> scores;
+    //**********
     public Game() {
     }
 
     public Game(Date creationDate) {
         this.creationDate = creationDate;
     }
-
+    //**********
     public long getId() {
         return id;
     }
@@ -39,6 +42,11 @@ public class Game {
         return gamePlayers;
     }
 
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    //**********
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
@@ -47,11 +55,16 @@ public class Game {
         this.gamePlayers = gamePlayers;
     }
 
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
+
     public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("creationDate", this.getCreationDate().getTime());
-        dto.put("gamePlayers", this.getAllGamePlayer(this.getGamePlayers()) );
+        dto.put("gamePlayers", this.getAllGamePlayer(this.getGamePlayers()));
+        dto.put("score", this.getScores());
         return dto;
     }
 
