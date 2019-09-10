@@ -71,4 +71,11 @@ public class Score {
     return finishDate;
   }
 
+  public Map<String, Object> makeScoresDTO() {
+    Map<String, Object> dto = new LinkedHashMap<String, Object>();
+    dto.put("id", this.getId());
+    dto.put("email", this.getPlayer().getUserName());
+    dto.put("score", this.getScore());
+    return dto;
+  }
 }

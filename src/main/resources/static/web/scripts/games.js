@@ -17,32 +17,7 @@ window.addEventListener('load', function () {
 });
 function cargarTabla(obj){
     players = verJugadores(obj)
-    let i =0;
-    let total= [];
-    let won= []
-    let lost= [];
-    let tied= [];
-    players.forEach(e => {
-        total[i]=0;
-        won[i]=0;
-        lost[i]=0;
-        tied[i]=0;
-        obj.forEach(d => {
-            d.gamePlayers.map(function(p) {
-                if(players[i]== p.player.email){
-                    //total[i]+= JSON.parse(p.player.score).score;
-                    console.log(players[i] +"/" +p.player.email)
-                    let scr=p.player.score[0];
-                    let s = src.score + ""; // simply convert a number to string
-                    let d = parseInt(s);
-                    console.log(d)
-                }
-            });
-        });
-        i++;
-    });
-    console.log(total)
-
+    calculos(obj, players);
 }
 Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
@@ -51,8 +26,8 @@ function verJugadores(obj){
     let i=0;
     let players= [];
     obj.forEach(e => {
-        e.gamePlayers.map(function(p) {
-            players[i]=p.player.email;
+        e.score.map(function(p) {
+            players[i]=p.email;
             i++;
         });
     });
@@ -60,8 +35,43 @@ function verJugadores(obj){
     console.log(players);
     return players;
 }
-function calcularTotal(obj){
 
+function calculos(obj, players){
+    let i =0;
+    let total= [];
+    let won= []
+    let lost= [];
+    let tied= [];
+    obj.forEach(e => {
+        players.forEach(d => {
+            total[i]=0;
+            won[i]=0;
+            lost[i]=0;
+            tied[i]=0;
+            console.log(d)
+            e.score.map(function(p) {
+                if(d == p.email){
+                    console.log(d +"/" + p.email)
+                    switch (p.score){
+                        case 0:
+                            lost[i]++;
+                            break;
+                        case 0.5:
+                            tied[i]++;
+                            break;
+                        case 1:
+                            won[i]++;
+                            break;
+                    }
+                    console.log();
+                }
+            });
+            console.log(won[i])
+            console.log(lost[i])
+            console.log(tied[i])
+            i++;
+        });
+    });
 }
 
 
