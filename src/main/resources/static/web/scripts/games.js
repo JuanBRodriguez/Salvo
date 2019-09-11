@@ -16,11 +16,19 @@ window.addEventListener('load', function () {
         });
 });
 function cargarTabla(obj){
-    let calc=[];
-
-    players = verJugadores(obj)
+    let calc;
+    let players = verJugadores(obj)
     calc = calculos(obj, players);
     console.log(calc);
+    calc.sort(function (a,b) { return b.to - a.to; });
+    console.log(calc);
+    for (i=0;i<3; i++){
+        $("#na"+i).html(calc[i].pl);
+        $("#to"+i).html(calc[i].to);
+        $("#wo"+i).html(calc[i].wo);
+        $("#lo"+i).html(calc[i].lo);
+        $("#ti"+i).html(calc[i].ti);
+    }
 }
 Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
@@ -74,7 +82,6 @@ function calculos(obj, players){
         data.push({pl: d,to: total,wo: won, lo: lost, ti: tied})
         i++;
     });
-    console.log(data);
     return data;
 }
 
@@ -89,6 +96,5 @@ function cargarLista(obj){
         });
     lista.innerHTML = htmlList;
 }
-
 
 
