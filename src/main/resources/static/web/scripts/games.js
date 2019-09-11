@@ -16,12 +16,16 @@ window.addEventListener('load', function () {
         });
 });
 function cargarTabla(obj){
+    let calc=[];
+
     players = verJugadores(obj)
-    calculos(obj, players);
+    calc = calculos(obj, players);
+    console.log(calc);
 }
 Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 });
+
 function verJugadores(obj){
     let i=0;
     let players= [];
@@ -38,40 +42,40 @@ function verJugadores(obj){
 
 function calculos(obj, players){
     let i =0;
-    let total= [];
-    let won= []
-    let lost= [];
-    let tied= [];
-    obj.forEach(e => {
-        players.forEach(d => {
-            total[i]=0;
-            won[i]=0;
-            lost[i]=0;
-            tied[i]=0;
-            console.log(d)
+    let data= [];
+    players.forEach(d => {
+        let total = 0;
+        let won = 0;
+        let lost = 0;
+        let tied = 0;
+        console.log("jugador: "+d)
+        obj.forEach(e => {
             e.score.map(function(p) {
                 if(d == p.email){
-                    console.log(d +"/" + p.email)
+                    total +=p.score;
                     switch (p.score){
                         case 0:
-                            lost[i]++;
+                            lost++;
                             break;
                         case 0.5:
-                            tied[i]++;
+                            tied++;
                             break;
                         case 1:
-                            won[i]++;
+                            won++;
                             break;
                     }
-                    console.log();
                 }
             });
-            console.log(won[i])
-            console.log(lost[i])
-            console.log(tied[i])
-            i++;
         });
+
+        console.log("ganados"+won)
+        console.log("perdidos"+lost)
+        console.log("empatados"+tied)
+        data.push({pl: d,to: total,wo: won, lo: lost, ti: tied})
+        i++;
     });
+    console.log(data);
+    return data;
 }
 
 
