@@ -23,10 +23,13 @@ public class Player {
     @OneToMany(mappedBy = "player",fetch = FetchType.EAGER)
     private Set<Score> scores;
 
+    private String password;
+
     public Player(){}
 
-    public Player(String userName) { //Constructor
+    public Player(String userName, String password) {
         this.userName = userName;
+        this.password = password;
     }
 
     //Getters
@@ -46,6 +49,10 @@ public class Player {
         return scores;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     //Setters
     public void setUserName(String userName) {
         this.userName = userName;
@@ -58,6 +65,11 @@ public class Player {
     public void setScores(Set<Score> scores) {
         this.scores = scores;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public Map<String, Object> makePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
