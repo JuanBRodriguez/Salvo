@@ -24,15 +24,15 @@ public class SalvoApplication {
 									  ScoreRepository scoreRepository){
 		return (args) -> {
 
-			Player p1 = new Player("j.bauer@ctu.gov");
+			Player p1 = new Player("j.bauer@ctu.gov", "1234");
 			playerRepository.save(p1);
-			Player p2 = new Player("c.obrian@ctu.gov");
+			Player p2 = new Player("c.obrian@ctu.gov", "1234");
 			playerRepository.save(p2);
-			Player p3 = new Player("kim_bauer@gmail.gov");
+			Player p3 = new Player("kim_bauer@gmail.gov", "1234");
 			playerRepository.save(p3);
-			Player p4 = new Player("t.almeida@ctu.gov");
+			Player p4 = new Player("t.almeida@ctu.gov", "1234");
 			playerRepository.save(p4);
-			Player p5 = new Player("jbcrodriguezsud@gmail.com");
+			Player p5 = new Player("jbcrodriguezsud@gmail.com", "1234");
 			playerRepository.save(p5);
 
 			Date date1 = new Date();
