@@ -8,8 +8,8 @@ window.addEventListener('load', function () {
     $.get("/api/games")
         .done(function (games) {
             console.log(games)
-            cargarTabla(games)
-            cargarLista(games)
+            cargarTabla(games.games)
+            cargarLista(games.games)
         })
         .fail(function( jqXHR, textStatus ) {
             console.log("Failed: " + textStatus );

@@ -390,9 +390,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin()
 						.usernameParameter("username")
 						.passwordParameter("password")
-						.loginPage("/app/login");
+						.loginPage("/api/login");
 
-		http.logout().logoutUrl("/app/logout");
+		http.logout().logoutUrl("/api/logout");
 
 		// turn off checking for CSRF tokens
 		http.csrf().disable();
