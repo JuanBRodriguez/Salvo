@@ -21,12 +21,12 @@ public class SalvoController {
     private PlayerRepository playerRepository;
     @RequestMapping("/games")
     public Map<String, Object> getGames(Authentication authentication) {
-        Player player = playerRepository.findByUserName(authentication.getName());
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         if(isGuest(authentication)) {
             dto.put("player", "guest");
         }else{
-            dto.put("player",playerRepository.findByUserName(authentication.getName()).makePlayerDTO());
+            Player player = playerRepository.findByUserName(authentication.getName());
+            dto.put("player", player.makePlayerDTO());
         }
         //dto.put("player", player.makePlayerDTO());
         dto.put("games",gameRepository.findAll().stream().map(Game::makeGameDTO).collect(Collectors.toList() ));
@@ -35,6 +35,7 @@ public class SalvoController {
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
+
     @RequestMapping("/game_view/{gamePlayerId}")
     public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
         GamePlayer gamePlayer =gamePlayerRepository.getOne(gamePlayerId);
