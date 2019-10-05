@@ -8,20 +8,30 @@ window.addEventListener('load', function () {
     $.get("/api/games")
         .done(function (games) {
             console.log(games)
+            if(games.player === "guest"){
+              $("#logueo").show();
+              $("#deslogueo").hide();
+            }else{
+              $("#logueo").hide();
+              $("#deslogueo").show();
+            }
             cargarTabla(games.games)
             cargarLista(games.games)
+
+            console.log("juegos cargados correctamente");
         })
         .fail(function( jqXHR, textStatus ) {
             console.log("Failed: " + textStatus );
         });
 });
+
 function cargarTabla(obj){
     let calc;
     let players = verJugadores(obj)
     calc = calculos(obj, players);
-    console.log(calc);
+    //console.log(calc);
     calc.sort(function (a,b) { return b.to - a.to; });
-    console.log(calc);
+    //console.log(calc);
     for (i=0;i<3; i++){
         $("#na"+i).html(calc[i].pl);
         $("#to"+i).html(calc[i].to);
@@ -44,7 +54,7 @@ function verJugadores(obj){
         });
     });
     players = players.unique();
-    console.log(players);
+    //console.log(players);
     return players;
 }
 
@@ -56,7 +66,7 @@ function calculos(obj, players){
         let won = 0;
         let lost = 0;
         let tied = 0;
-        console.log("jugador: "+d)
+        //console.log("jugador: "+d)
         obj.forEach(e => {
             e.score.map(function(p) {
                 if(d == p.email){
@@ -76,9 +86,9 @@ function calculos(obj, players){
             });
         });
 
-        console.log("ganados"+won)
-        console.log("perdidos"+lost)
-        console.log("empatados"+tied)
+        //console.log("ganados"+won)
+        //console.log("perdidos"+lost)
+        //console.log("empatados"+tied)
         data.push({pl: d,to: total,wo: won, lo: lost, ti: tied})
         i++;
     });
@@ -97,4 +107,44 @@ function cargarLista(obj){
     lista.innerHTML = htmlList;
 }
 
+function login(){
+  let usuario = $("#email").val();
+  let contrase = $("#pass").val();
 
+  $.post("/api/login", { username: usuario, password: contrase })
+            .done(function() {
+              console.log("logged in!");
+              location.reload();
+            })
+            .fail(function( jqXHR, textStatus ) {
+                        console.log("Failed: " + textStatus );
+            });
+}
+function registrar(){
+  let usuario = $("#email").val();
+  let contrase = $("#pass").val();
+
+  $.post("/api/players", { username: usuario, password: contrase})
+            .done(function() {
+                console.log("registred success");
+                $.post("/api/login", { username: usuario, password: contrase })
+                            .done(function() {
+                              console.log("logged in!");
+                              location.reload();
+                            })
+            })
+            .fail(function( jqXHR, textStatus ) {
+                  console.log("Failed: " + textStatus );
+            });
+}
+
+function desloguear(){
+  $.post("/api/logout")
+              .done(function() {
+                console.log("logged out");
+                location.reload();
+              })
+              .fail(function( jqXHR, textStatus ) {
+                          console.log("Failed: " + textStatus );
+               });
+}
