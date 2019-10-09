@@ -22,9 +22,11 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -58,53 +60,53 @@ public class SalvoApplication {
 			playerRepository.save(p5);
 
 			Date date1 = new Date();
-			Game g1 = new Game(date1);
+			Game g1 = new Game();
 			gameRepository.save(g1);
 
 			Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
-			Game g2 = new Game(date1);
+			Game g2 = new Game();
 			gameRepository.save(g2);
 
 			Date date3 = Date.from(date2.toInstant().plusSeconds(3600));
-			Game g3 = new Game(date3);
+			Game g3 = new Game();
 			gameRepository.save(g3);
 
-			Game g4 = new Game(date1);
+			Game g4 = new Game();
 			gameRepository.save(g4);
 
-			Game g5 = new Game(date1);
+			Game g5 = new Game();
 			gameRepository.save(g5);
 
-			Game g6 = new Game(date1);
+			Game g6 = new Game();
 			gameRepository.save(g6);
 
-			Game g7 = new Game(date1);
+			Game g7 = new Game();
 			gameRepository.save(g7);
 
-			Game g8 = new Game(date1);
+			Game g8 = new Game();
 			gameRepository.save(g8);
 			//
-			GamePlayer gp1 = new GamePlayer(date1, g1, p1);
-			GamePlayer gp2 = new GamePlayer(date1, g1, p2);
+			GamePlayer gp1 = new GamePlayer(g1, p1);
+			GamePlayer gp2 = new GamePlayer(g1, p2);
 			//
-			GamePlayer gp3 = new GamePlayer(date1, g2, p1);
-			GamePlayer gp4 = new GamePlayer(date1, g2, p2);
+			GamePlayer gp3 = new GamePlayer(g2, p1);
+			GamePlayer gp4 = new GamePlayer(g2, p2);
 			//
-			GamePlayer gp5 = new GamePlayer(date1, g3, p2);
-			GamePlayer gp6 = new GamePlayer(date1, g3, p4);
+			GamePlayer gp5 = new GamePlayer(g3, p2);
+			GamePlayer gp6 = new GamePlayer(g3, p4);
 
-			GamePlayer gp7 = new GamePlayer(date1, g4, p2);
-			GamePlayer gp8 = new GamePlayer(date1, g4, p1);
+			GamePlayer gp7 = new GamePlayer(g4, p2);
+			GamePlayer gp8 = new GamePlayer(g4, p1);
 
-			GamePlayer gp9 = new GamePlayer(date1, g5, p4);
-			GamePlayer gp10 = new GamePlayer(date1, g5, p1);
+			GamePlayer gp9 = new GamePlayer(g5, p4);
+			GamePlayer gp10 = new GamePlayer(g5, p1);
 
-			GamePlayer gp11 = new GamePlayer(date1, g6, p3);
+			GamePlayer gp11 = new GamePlayer(g6, p3);
 
-			GamePlayer gp12 = new GamePlayer(date1, g7, p4);
+			GamePlayer gp12 = new GamePlayer(g7, p4);
 
-			GamePlayer gp13 = new GamePlayer(date1, g8, p3);
-			GamePlayer gp14 = new GamePlayer(date1, g8, p4);
+			GamePlayer gp13 = new GamePlayer(g8, p3);
+			GamePlayer gp14 = new GamePlayer(g8, p4);
 			gamePlayerRepository.save(gp1);
 			gamePlayerRepository.save(gp2);
 			gamePlayerRepository.save(gp3);
@@ -362,7 +364,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(inputName-> {
-			Player player = (Player) playerRepository.findByUserName(inputName);
+			Player player = playerRepository.findByUserName(inputName).get();
 			if (player != null) {
 				return new User(player.getUserName(), player.getPassword(),
 								AuthorityUtils.createAuthorityList("USER"));

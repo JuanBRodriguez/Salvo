@@ -15,7 +15,7 @@ public class GamePlayer {
     @GenericGenerator(name = "native", strategy = "native")
 
     private long id;
-    private Date joinDate;
+    private Date joinDate = new Date();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id")
@@ -33,8 +33,7 @@ public class GamePlayer {
     //
     public GamePlayer() {
     }
-    public GamePlayer(Date joinDate, Game game, Player player) {
-        this.joinDate = joinDate;
+    public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;
     }

@@ -29,7 +29,7 @@ public class SalvoController {
         if(isGuest(authentication)) {
             dto.put("player", "guest");
         }else{
-            Player player = playerRepository.findByUserName(authentication.getName());
+            Player player = playerRepository.findByUserName(authentication.getName()).get();
             dto.put("player", player.makePlayerDTO());
         }
         //dto.put("player", player.makePlayerDTO());
@@ -60,10 +60,12 @@ public class SalvoController {
         if (username.isEmpty()||password.isEmpty()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
-        if (playerRepository.findByUserName(username)!= null) {
+        if (playerRepository.findByUserName(username).orElse(null)!= null) {
             return new ResponseEntity<>("Name alredy in use",HttpStatus.FORBIDDEN);
         }
         playerRepository.save(new Player(username, passwordEncoder.encode(password)));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 }

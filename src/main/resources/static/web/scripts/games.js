@@ -1,7 +1,6 @@
 //Referencias al Dooom
 var lista = document.getElementById("lista");
 
-//variables globales
 window.addEventListener('load', function () {
     console.log("hola termino de cargar");
 
@@ -147,4 +146,9 @@ function desloguear(){
               .fail(function( jqXHR, textStatus ) {
                           console.log("Failed: " + textStatus );
                });
+}
+
+function joinGame(){
+
+ console.log("se unio");
 }
