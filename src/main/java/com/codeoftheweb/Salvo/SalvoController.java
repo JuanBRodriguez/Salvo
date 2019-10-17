@@ -87,25 +87,25 @@ public class SalvoController {
     public ResponseEntity<Map<String,Object>> joinGame(@PathVariable Long gameId, Authentication authentication){
 
         if(isGuest(authentication)){
-            return new ResponseEntity<>(GameController.makeMap("error:","Algo salio mal"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(GameController.makeMap("error:","Des Autorizado usuario no logeado"), HttpStatus.UNAUTHORIZED);
         }
         Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
         Game game =gameRepository.getOne(gameId);
 
         if (game == null){
-            return new ResponseEntity<>(GameController.makeMap("error:","Algo salio mal"), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(GameController.makeMap("error:","juego no encontrado"), HttpStatus.FORBIDDEN);
         }
         if (player == null){
-            return new ResponseEntity<>(GameController.makeMap("error:","Algo salio mal"), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(GameController.makeMap("error:","jugador no encontrado"), HttpStatus.FORBIDDEN);
         }
         int gamePlayersCount = game.getGamePlayers().size();
 
         if (gamePlayersCount == 1){
-            GamePlayer gamePlayer
-            return new ResponseEntity<>(GameController.makeMap("error:","Algo salio mal"), HttpStatus.CONFLICT);
+            GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
+            return new ResponseEntity<>(GameController.makeMap("gpId",gamePlayer.getId()), HttpStatus.CREATED);
+        }else{
+        return new  ResponseEntity<>(GameController.makeMap("error","Juego completo"),HttpStatus.OK);
         }
-
-        return new ResponseEntity<>()
     }
 
 }
