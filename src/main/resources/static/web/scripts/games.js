@@ -99,9 +99,12 @@ function calculos(obj, players){
 function cargarLista(obj){
     var htmlList = "";
     obj.forEach(e => {
-              htmlList +='<li>';
-              htmlList +=new Date(e.creationDate).toLocaleString();
-              htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(',');
+              htmlList += '<li>';
+              htmlList += '<button type="button" onclick="joinGame(this)" id="'+e.id +'"';
+              htmlList += ' class=" joinGame btn btn-primary m-2">Join Game </button>';
+              htmlList += new Date(e.creationDate).toLocaleString();
+              htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(' VS ');
+
               htmlList +='</li>';
         });
     lista.innerHTML = htmlList;
@@ -149,22 +152,26 @@ function desloguear(){
                });
 }
 
-function joinGame(){
-  console.log("entrando al juego");
-    $.post("/api/games")
-        .done(function(data){
-            console.log(data);
-            console.log("juego creado");
-          var gameViewUrl ="/web/game.html?gp="+ data.gpid;
-            $('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
-            setTimeout(function(){
-            location.href=gameViewUrl;},3000);
-        })
-        .fail(function(data){
-            console.log("game creation failed");
-            $('#errorSingup').text(data.responseJson.error);
-            $('#errorSingup').show("slow").delay(4000).hide("slow");
-        });
+/*$(".joinGame").click(function() {
+
+ });*/
+function joinGame(ele){
+  console.log("entrando al juego "+ ele.id);
+  let url = "/api/game/" + ele.id + "/players";
+  $.post(url)
+     .done(function (data) {
+         console.log(data);
+         console.log("game joined");
+         gameViewUrl = "/web/game.html?gp=" + data.gpid;
+         $('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
+             setTimeout(function(){
+                                location.href = gameViewUrl;
+                            }, 3000);
+     })
+     .fail(function (data) {
+        console.log("game join failed");
+     });
+
 }
 
 function createGame(){
