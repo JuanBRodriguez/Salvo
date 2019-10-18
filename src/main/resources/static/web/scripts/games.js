@@ -1,4 +1,4 @@
-//Referencias al Dooom
+//Referencias al Dooom https://gitlab.com/comision08fullstack/salvo/blob/task7/src/main/resources/static/web/games.html
 var lista = document.getElementById("lista");
 
 window.addEventListener('load', function () {
@@ -39,6 +39,7 @@ function cargarTabla(obj){
         $("#ti"+i).html(calc[i].ti);
     }
 }
+
 Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 });
@@ -149,6 +150,37 @@ function desloguear(){
 }
 
 function joinGame(){
+  console.log("entrando al juego");
+    $.post("/api/games")
+        .done(function(data){
+            console.log(data);
+            console.log("juego creado");
+          var gameViewUrl ="/web/game.html?gp="+ data.gpid;
+            $('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
+            setTimeout(function(){
+            location.href=gameViewUrl;},3000);
+        })
+        .fail(function(data){
+            console.log("game creation failed");
+            $('#errorSingup').text(data.responseJson.error);
+            $('#errorSingup').show("slow").delay(4000).hide("slow");
+        });
+}
 
- console.log("se unio");
+function createGame(){
+  console.log("creando juego");
+    $.post("/api/games")
+        .done(function(data){
+            console.log(data);
+            console.log("juego creado");
+          var gameViewUrl ="/web/game.html?gp="+ data.gpid;
+            $('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
+            setTimeout(function(){
+            location.href=gameViewUrl;},3000);
+        })
+        .fail(function(data){
+            console.log("game creation failed");
+            $('#errorSingup').text(data.responseJson.error);
+            $('#errorSingup').show("slow").delay(4000).hide("slow");
+        });
 }

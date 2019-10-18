@@ -13,7 +13,7 @@ function loadGame() {
     $.get('/api/game_view/'+getParameterByName('gp'))
         .done(function(data) {
             console.log(data);
-            let playerInfo;
+            let playerInfo = [];
             let turnAct = 2;
             if(data.gamePlayers[0].id == getParameterByName('gp')){
                 playerInfo = [data.gamePlayers[0].player.email, data.gamePlayers[1].player.email];
