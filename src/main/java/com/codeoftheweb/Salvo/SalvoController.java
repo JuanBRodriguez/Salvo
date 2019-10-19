@@ -101,10 +101,14 @@ public class SalvoController {
         int gamePlayersCount = game.getGamePlayers().size();
 
         if (gamePlayersCount == 1){
-            GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
-            return new ResponseEntity<>(GameController.makeMap("gpId",gamePlayer.getId()), HttpStatus.CREATED);
+            if (game.getOneGamePlayer().getPlayer().getUserName()== player.getUserName()){
+                return new ResponseEntity<>(GameController.makeMap("error:","El jugador ya se encuentra en el juego"), HttpStatus.UNAUTHORIZED);
+            }else{
+                GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
+                return new ResponseEntity<>(GameController.makeMap("gpId",gamePlayer.getId()), HttpStatus.CREATED);
+            }
         }else{
-        return new  ResponseEntity<>(GameController.makeMap("error","Juego completo"),HttpStatus.OK);
+            return new  ResponseEntity<>(GameController.makeMap("error","Juego completo"),HttpStatus.OK);
         }
     }
 

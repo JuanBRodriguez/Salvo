@@ -72,4 +72,8 @@ public class Game {
     public List<Map<String, Object>> getAllGamePlayer(Set <GamePlayer> gamePlayers) {
         return gamePlayers.stream().map(GamePlayer -> GamePlayer.makeGamePlayerDTO()).collect(Collectors.toList());
     }
+
+    public GamePlayer getOneGamePlayer() {
+        return this.gamePlayers.iterator().next();
+    }
 }

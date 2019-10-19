@@ -5,17 +5,17 @@ window.addEventListener('load', function () {
     console.log("hola termino de cargar");
 
     $.get("/api/games")
-        .done(function (games) {
-            console.log(games)
-            if(games.player === "guest"){
+        .done(function (datos) {
+            console.log(datos)
+            if(datos.player === "guest"){
               $("#logueo").show();
               $("#deslogueo").hide();
             }else{
               $("#logueo").hide();
               $("#deslogueo").show();
             }
-            cargarTabla(games.games)
-            cargarLista(games.games)
+            cargarTabla(datos.games)
+            cargarLista(datos)
 
             console.log("juegos cargados correctamente");
         })
@@ -98,10 +98,22 @@ function calculos(obj, players){
 
 function cargarLista(obj){
     var htmlList = "";
-    obj.forEach(e => {
+    obj.games.forEach(e => {
+              let usAct= true;
+              e.gamePlayers.map(function(p) {
+                        if(p.player.email == obj.player.email){
+                            usAct=false;
+                        }
+                      });
               htmlList += '<li>';
-              htmlList += '<button type="button" onclick="joinGame(this)" id="'+e.id +'"';
-              htmlList += ' class=" joinGame btn btn-primary m-2">Join Game </button>';
+              console.log(usAct);
+              if(usAct){
+                    htmlList += '<button type="button" onclick="joinGame(this)" id="'+e.id +'"';
+                    htmlList += ' class=" joinGame btn btn-primary m-2">Join Game </button>';
+              }else{
+                    htmlList += '<button type="button" onclick="reEnter(this)" id="'+e.id +'"';
+                    htmlList += ' class="btn btn-primary m-2">Re-Enter Game </button>';
+              }
               htmlList += new Date(e.creationDate).toLocaleString();
               htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(' VS ');
 
@@ -152,9 +164,7 @@ function desloguear(){
                });
 }
 
-/*$(".joinGame").click(function() {
 
- });*/
 function joinGame(ele){
   console.log("entrando al juego "+ ele.id);
   let url = "/api/game/" + ele.id + "/players";
@@ -162,16 +172,29 @@ function joinGame(ele){
      .done(function (data) {
          console.log(data);
          console.log("game joined");
-         gameViewUrl = "/web/game.html?gp=" + data.gpid;
+         gameViewUrl = "/web/game.html?gp=" + data.gpId;
          $('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
-             setTimeout(function(){
-                                location.href = gameViewUrl;
-                            }, 3000);
+         setTimeout(function(){ location.href = gameViewUrl; }, 3000);
      })
      .fail(function (data) {
         console.log("game join failed");
      });
+}
 
+function reEnter(ele){
+  console.log("entrando al juego "+ ele.id);
+  let url = "/api/game/" + ele.id + "/players";
+  $.post(url)
+       .done(function (data) {
+           console.log(data);
+           console.log("game joined");
+           gameViewUrl = "/web/game.html?gp=" + data.gpId;
+           $('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
+           setTimeout(function(){ location.href = gameViewUrl; }, 3000);
+       })
+       .fail(function (data) {
+          console.log("game join failed");
+       });
 }
 
 function createGame(){
@@ -180,14 +203,12 @@ function createGame(){
         .done(function(data){
             console.log(data);
             console.log("juego creado");
-          var gameViewUrl ="/web/game.html?gp="+ data.gpid;
+          var gameViewUrl ="/web/game.html?gp="+ data.gpId;
             $('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
             setTimeout(function(){
             location.href=gameViewUrl;},3000);
         })
         .fail(function(data){
             console.log("game creation failed");
-            $('#errorSingup').text(data.responseJson.error);
-            $('#errorSingup').show("slow").delay(4000).hide("slow");
         });
 }
