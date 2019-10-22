@@ -99,23 +99,29 @@ function calculos(obj, players){
 function cargarLista(obj){
     var htmlList = "";
     obj.games.forEach(e => {
-              let usAct= true;
+              let incluido= false;
+              let gameP = 0;
               e.gamePlayers.map(function(p) {
                         if(p.player.email == obj.player.email){
-                            usAct=false;
+                            incluido=true;
+                            gameP = p.id;
                         }
-                      });
+              });
               htmlList += '<li>';
-              console.log(usAct);
-              if(usAct){
-                    htmlList += '<button type="button" onclick="joinGame(this)" id="'+e.id +'"';
-                    htmlList += ' class=" joinGame btn btn-primary m-2">Join Game </button>';
-              }else{
-                    htmlList += '<button type="button" onclick="reEnter(this)" id="'+e.id +'"';
-                    htmlList += ' class="btn btn-primary m-2">Re-Enter Game </button>';
-              }
+              //console.log(e.score.length);
               htmlList += new Date(e.creationDate).toLocaleString();
               htmlList += ' ' + e.gamePlayers.map(function(p) { return p.player.email}).join(' VS ');
+              if(incluido && !(e.score.length > 0)){
+                      htmlList += '<button type="button" onclick="reEnter(this)" id="'+gameP +'"';
+                      htmlList += ' class="btn btn-primary m-2">Re-Enter Game </button>'
+              }else{
+                  if(e.gamePlayers.length == 2){
+                       htmlList +='';
+                  }else{
+                       htmlList += '<button type="button" onclick="joinGame(this)" id="'+e.id +'"';
+                       htmlList += 'class=" joinGame btn btn-primary m-2">Join Game </button>';
+                  }
+              }
 
               htmlList +='</li>';
         });
@@ -182,19 +188,10 @@ function joinGame(ele){
 }
 
 function reEnter(ele){
-  console.log("entrando al juego "+ ele.id);
-  let url = "/api/game/" + ele.id + "/players";
-  $.post(url)
-       .done(function (data) {
-           console.log(data);
-           console.log("game joined");
-           gameViewUrl = "/web/game.html?gp=" + data.gpId;
-           $('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
-           setTimeout(function(){ location.href = gameViewUrl; }, 3000);
-       })
-       .fail(function (data) {
-          console.log("game join failed");
-       });
+  console.log("entrando al gameplayer "+ ele.id);
+  let url = "/web/game.html?gp=" + ele.id + "";
+  $('#gameJoinedSuccess').show("slow").delay(1000).hide("slow");
+  setTimeout(function(){ location.href = url; }, 2000);
 }
 
 function createGame(){
