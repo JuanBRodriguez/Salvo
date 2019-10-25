@@ -56,3 +56,22 @@ function loadGame() {
             console.log("Failed: " + textStatus );
         });
 };
+
+
+function addShips(){
+  $.post({
+      url: "/api/games/players/15/ship",
+      data: JSON.stringify( { "type": "destroyer", "shipLocations": ["A1", "B1", "C1"] }
+                           ),
+                           /*,{ "type": "patrol boat", "locations": ["H5", "H6"] },
+                           { "type": "submarine", "locations": ["H8", "H9", "H10"]*/
+      dataType: "text",
+      contentType: "application/json"
+  })
+  .done(function (response, status, jqXHR) {
+     console.log( "ships guardados: " + response );
+  })
+  .fail(function (jqXHR, textStatus, httpError) {
+    console.log("shisps no guardados: " + textStatus + " " + httpError);
+  })
+}
