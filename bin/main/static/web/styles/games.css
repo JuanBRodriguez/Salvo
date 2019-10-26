@@ -10,14 +10,14 @@
     background-color: crimson;
 }
 body{
-    background-image: url("../img/ship.jpg");
+    background-image: url("../img/War-Ships-HD-Wallpapers-9.jpg");
     background-size: 100%;
-    
+    color: white;
 }
 table{
     height: 200px;
     width: 200px;
-    background-color: rgba(0, 0, 0, 0.2);
+    
 }
 th{
     color: red; 
