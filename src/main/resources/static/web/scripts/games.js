@@ -179,8 +179,8 @@ function joinGame(ele){
          console.log(data);
          console.log("game joined");
          gameViewUrl = "/web/game.html?gp=" + data.gpId;
-         $('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
-         setTimeout(function(){ location.href = gameViewUrl; }, 3000);
+         //$('#gameJoinedSuccess').show("slow").delay(2000).hide("slow");
+         setTimeout(function(){ location.href = gameViewUrl; }, 2000);
      })
      .fail(function (data) {
         console.log("game join failed");
@@ -190,7 +190,7 @@ function joinGame(ele){
 function reEnter(ele){
   console.log("entrando al gameplayer "+ ele.id);
   let url = "/web/game.html?gp=" + ele.id + "";
-  $('#gameJoinedSuccess').show("slow").delay(1000).hide("slow");
+  //$('#gameJoinedSuccess').show("slow").delay(1000).hide("slow");
   setTimeout(function(){ location.href = url; }, 2000);
 }
 
@@ -201,9 +201,8 @@ function createGame(){
             console.log(data);
             console.log("juego creado");
           var gameViewUrl ="/web/game.html?gp="+ data.gpId;
-            $('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
-            setTimeout(function(){
-            location.href=gameViewUrl;},3000);
+            //$('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
+            setTimeout(function(){ location.href=gameViewUrl; },2000);
         })
         .fail(function(data){
             console.log("game creation failed");

@@ -115,23 +115,27 @@ public class SalvoController {
     }
 
     @RequestMapping(path = "/games/players/{gpId}/ship", method = RequestMethod.POST)
-    public ResponseEntity<Map<String,Object>> addShips(@PathVariable Long gpId, @RequestBody Ship ships, Authentication auth){
+    public ResponseEntity<Map<String,Object>> addShips(@PathVariable Long gpId, @RequestBody List<Ship> ships, Authentication auth){
 
         if(isGuest(auth)){
-            return new ResponseEntity<>(GameController.makeMap("error:","Des Autorizado, usuario no logeado"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(GameController.makeMap("error: Des Autorizado, usuario no logeado",""), HttpStatus.UNAUTHORIZED);
         }
         Player player = playerRepository.findByUserName(auth.getName()).orElse(null);
         GamePlayer gamePlayer = gamePlayerRepository.findById(gpId).orElse(null);
 
         if (player.getId() != gamePlayer.getPlayer().getId()){
-            return new ResponseEntity<>(GameController.makeMap("error:","jugador equivocado"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado",""), HttpStatus.UNAUTHORIZED);
         }
         if (!gamePlayer.getShips().isEmpty()){
-            return new ResponseEntity<>(GameController.makeMap("error:","ships ya seteados"), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados",""), HttpStatus.FORBIDDEN);
         }
-        ships.setGamePlayer(gamePlayer);
-        shipRepository.save(ships);
-        return new  ResponseEntity<>(GameController.makeMap("ships"," correctos"),HttpStatus.CREATED);
+        ships.stream().map(ship -> {
+                                        ship.setGamePlayer(gamePlayer);
+                                        return shipRepository.save(ship);
+                                    }).collect(Collectors.toList());
+        //ships.setGamePlayer(gamePlayer);
+        //shipRepository.save(ships);
+        return new  ResponseEntity<>(GameController.makeMap("ships correctos"," "),HttpStatus.CREATED);
     }
 
 }

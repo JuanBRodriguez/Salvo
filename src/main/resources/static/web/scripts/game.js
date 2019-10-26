@@ -60,16 +60,17 @@ function loadGame() {
 
 function addShips(){
   $.post({
-      url: "/api/games/players/15/ship",
-      data: JSON.stringify( { "type": "destroyer", "shipLocations": ["A1", "B1", "C1"] }
+      url: "/api/games/players/"+ getParameterByName('gp')+"/ship",
+      data: JSON.stringify( [{ "type": "destroyer", "shipLocations": ["A1", "B1", "C1"]},
+                            { "type": "patrol boat", "shipLocations": ["H5", "H6"] },
+                            { "type": "submarine", "shipLocations": ["H8", "H9", "H10"] }]
                            ),
-                           /*,{ "type": "patrol boat", "locations": ["H5", "H6"] },
-                           { "type": "submarine", "locations": ["H8", "H9", "H10"]*/
       dataType: "text",
       contentType: "application/json"
   })
   .done(function (response, status, jqXHR) {
      console.log( "ships guardados: " + response );
+     setTimeout(function(){ location.reload(); }, 2000);
   })
   .fail(function (jqXHR, textStatus, httpError) {
     console.log("shisps no guardados: " + textStatus + " " + httpError);
