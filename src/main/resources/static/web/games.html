@@ -13,26 +13,28 @@
 </head>
 
 <body class="container-fluid">
-  <h2> Salvo Games</h2>
+  <div class="row text-center">
+    <a href="games.html" class="col-2">
+      <img src="img/image.png" alt="logo" height="70" width="90">
+    </a>
+    <h1 class="col-8">Salvo Games</h1>
+  </div>
 
   <form id="log" class="form-inline mb-3">
     <div class="form-group" id="logueo">
-      <label for="email" class="form-label">Email address</label>
+      <label for="email" class="form-label m-2">Email address</label>
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-      <label for="pass" class="form-label">Password </label>
+      <label for="pass" class="form-label m-2">Password </label>
       <input type="password" class="form-control" id="pass" placeholder="Password">
-      <button type="button" onclick="login()" class="btn btn-primary">Login</button>
-      <button type="button" onclick="registrar()" class="btn btn-primary">Register</button>
+      <button type="button" onclick="login()" class="btn btn-primary m-2">Login</button>
+      <button type="button" onclick="registrar()" class="btn btn-primary m-2">Register</button>
     </div>
-    <div class="form-group ml-2" id="deslogueo">
+    <div class="form-group m-2" id="deslogueo">
       <button type="button" id="logout" onclick="desloguear()" class="btn btn-primary">Logout</button>
     </div>
   </form>
 
-  <div class="row" id="">
-    <button type="button" id="crearJuego" onclick="createGame()" class="btn btn-primary m-2">Crear Juego</button>
 
-  </div>
 
   <div class="row">
     <section class="col-6">
@@ -73,8 +75,12 @@
       </table>
     </section>
   </div>
-  <ol id="lista">
-  </ol>
+  <div class="row" id="">
+    <button type="button" id="crearJuego" onclick="createGame()" class="btn btn-primary m-2">Crear Juego</button>
+    <ol id="lista">
+    </ol>
+  </div>
+
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
