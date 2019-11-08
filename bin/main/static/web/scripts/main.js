@@ -51,11 +51,9 @@ const loadGrid = function () {
         7, 8, 3, 1);
 
 
-    //createGrid construye la estructura de la matriz de barcos
+    //createGrid construye la estructura de la matriz
     createGrid(11, $(".grid-ships"), 'ships')
 
-    //createGrid construye la estructura de la matriz de salvos
-    createGrid(11, $(".grid-salvos"), 'salvos')
     //Inicializo los listenener para rotar los barcos, el numero del segundo rgumento
     //representa la cantidad de celdas que ocupa tal barco
     rotateShips("carrier", 5)
@@ -268,5 +266,7 @@ function obtenerPosicion(ship) {
     let objShip = new Object();
     objShip["type"] = carrier1.name;
     objShip["shipLocations"] = carrier1.positions;
+
     return objShip;
+
 }
