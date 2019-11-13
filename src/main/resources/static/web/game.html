@@ -1,3 +1,4 @@
+<!-- https://www.remove.bg/ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,30 +29,41 @@
     <h2 id="playerInfo"></h2>
   </div>
 
-  <div class="container-fluid row text-center">
+  <div class="container-fluid row text-center collapse show">
+    <div class="col-2">
+    </div>
+    <section class="col-8">
+      <h2>Your ships</h2>
+      <div class="grid-ships">
+        <div id="grid" class="grid-stack grid-stack-10">
+        </div>
+      </div>
+      <small id="alert-text"></small>
+    </section>
+    <div class="col-2">
+    </div>
+  </div>
+  <div class="container-fluid row text-center collapse show">
     <div class="col-1">
     </div>
     <section class="col-5">
       <h2>Your ships</h2>
       <div class="grid-ships">
         <div id="grid" class="grid-stack grid-stack-10">
-
         </div>
       </div>
       <small id="alert-text"></small>
     </section>
-
     <section id="salvos" class="col-5">
-      <h2>Shots</h2>
+      <h2>Your Shots</h2>
       <div class="grid-salvos">
         <div id="salvo" class="grid-stack grid-stack-10">
-
         </div>
       </div>
     </section>
-    <div class="col-1">
-    </div>
 
+    <div class="col-1">
+    </div>F
   </div>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
