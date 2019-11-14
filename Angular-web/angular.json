@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Salvo": {
+    "Angular-web": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Salvo",
+            "outputPath": "dist/Angular-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Salvo:build"
+            "browserTarget": "Angular-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Salvo:build:production"
+              "browserTarget": "Angular-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Salvo:build"
+            "browserTarget": "Angular-web:build"
           }
         },
         "test": {
@@ -111,15 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Salvo:serve"
+            "devServerTarget": "Angular-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Salvo:serve:production"
+              "devServerTarget": "Angular-web:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "Salvo"
+  "defaultProject": "Angular-web"
 }
