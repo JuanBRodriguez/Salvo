@@ -152,6 +152,7 @@ const createGrid = function (size, element, id) {
 /*manejador de evento para rotar los barcos, el mismo se ejecuta al hacer click
 sobre un barco
 function(tipoDeBarco, celda)*/
+
 const rotateShips = function (shipType, cells) {
 
     $(`#${shipType}`).click(function () {
@@ -246,6 +247,8 @@ const listenBusyCells = function (id) {
         }
     }
 }
+
+/************************************************************ */
 
 function obtenerPosicion(ship) {
     var carrier1 = new Object();
