@@ -4,7 +4,6 @@ body {
 }
 
 .bannerTitle {
-    margin: 15px auto 0;
     text-align: center;
     background: #00000038;
     border-top-left-radius: 20px;
@@ -60,8 +59,8 @@ body {
 }
 
 .bannerImageGames {
-    width: 50%;
-    margin-top: 8px;
+    width: 10%;
+    height: 10%;
 }
 
 #loginFailed, #errorSignup, #errorShips, #errorSalvo {

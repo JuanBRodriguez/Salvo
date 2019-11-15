@@ -1,6 +1,6 @@
 //Referencias al Dooom https://gitlab.com/comision08fullstack/salvo/blob/task7/src/main/resources/static/web/games.html
 var lista = document.getElementById("lista");
-
+// *******
 window.addEventListener('load', function () {
     console.log("hola termino de cargar");
 
@@ -95,6 +95,7 @@ function calculos(obj, players){
     return data;
 }
 
+// *******
 
 function cargarLista(obj){
     var htmlList = "";
@@ -127,7 +128,7 @@ function cargarLista(obj){
         });
     lista.innerHTML = htmlList;
 }
-
+// *******
 function login(){
   let usuario = $("#email").val();
   let contrase = $("#pass").val();
@@ -141,6 +142,7 @@ function login(){
                         console.log("Failed: " + textStatus );
             });
 }
+// *******
 function registrar(){
   let usuario = $("#email").val();
   let contrase = $("#pass").val();
@@ -158,7 +160,7 @@ function registrar(){
                   console.log("Failed: " + textStatus );
             });
 }
-
+// *******
 function desloguear(){
   $.post("/api/logout")
               .done(function() {
@@ -170,6 +172,7 @@ function desloguear(){
                });
 }
 
+// *******
 
 function joinGame(ele){
   console.log("entrando al juego "+ ele.id);
@@ -186,6 +189,7 @@ function joinGame(ele){
         console.log("game join failed");
      });
 }
+// *******
 
 function reEnter(ele){
   console.log("entrando al gameplayer "+ ele.id);
@@ -193,14 +197,14 @@ function reEnter(ele){
   //$('#gameJoinedSuccess').show("slow").delay(1000).hide("slow");
   setTimeout(function(){ location.href = url; }, 2000);
 }
-
+// *******
 function createGame(){
   console.log("creando juego");
     $.post("/api/games")
         .done(function(data){
             console.log(data);
             console.log("juego creado");
-          var gameViewUrl ="/web/game.html?gp="+ data.gpId;
+          var gameViewUrl ="/web/game.html?gp="+ data.gpid;
             //$('gameCreatedSuccess').show("slow").delay(2000).hide("slow").delay(2000);
             setTimeout(function(){ location.href=gameViewUrl; },2000);
         })
