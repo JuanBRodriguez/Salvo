@@ -11,7 +11,7 @@ var shipsJSON;
 
 
 
-$('#save-grid').click(function() {
+$('#save-grid').click(function () {
     grid.saveGrid();
     renderPositions(positions);
     grid.setStatic(true);
@@ -19,7 +19,7 @@ $('#save-grid').click(function() {
 });
 
 
-$(function() {
+$(function () {
     var options = {
         width: 10,
         height: 10,
@@ -63,8 +63,8 @@ $(function() {
     // 	appendTo: 'body'
     // });
 
-    grid.saveGrid = function() {
-        this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function(el) {
+    grid.saveGrid = function () {
+        this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
             el = $(el);
             var node = el.data('_gridstack_node');
             return {
@@ -176,8 +176,8 @@ function shipPositionMsg(ship) {
     return shipPositionMsgRendered;
 }
 
-$('#grid1').on('change', function(event, items) {
-    items.forEach(function(ship) {
+$('#grid1').on('change', function (event, items) {
+    items.forEach(function (ship) {
         var shipLocation = shipPositionMsg(ship);
         $('#' + ship.id + 'Position').text(shipLocation).removeClass('movingShip');
 
@@ -185,14 +185,14 @@ $('#grid1').on('change', function(event, items) {
     console.log(items);
 });
 
-$('#grid1').on('dragstart', function(event, ui) {
+$('#grid1').on('dragstart', function (event, ui) {
     notMoved = $('#' + event.target.id + 'Position').text();
     $('.movingMsgBig').html("..." + event.target.id + "<br>is moving...");
     $('#' + event.target.id + 'Position').text("waiting new position").addClass('movingShip');
 
 });
 
-$('#grid1').on('dragstop', function(event, ui) {
+$('#grid1').on('dragstop', function (event, ui) {
 
     $('.movingMsgBig').html(event.target.id + "<br>relocated!");
     $('#' + event.target.id + 'Position').text(notMoved).removeClass('movingShip');

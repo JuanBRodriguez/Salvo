@@ -4,7 +4,7 @@ var salvo3cellID = "salvoout3";
 var salvo4cellID = "salvoout4";
 var salvo5cellID = "salvoout5";
 
-(function() {
+(function () {
 
     function init() {
         var startPos = null;
@@ -13,7 +13,7 @@ var salvo5cellID = "salvoout5";
             snap: {
                 targets: [startPos],
                 range: Infinity,
-                relativePoints: [ { x: 0.5, y: 0.5 } ],
+                relativePoints: [{ x: 0.5, y: 0.5 }],
                 endOnly: true
             },
             onstart: function (event) {
@@ -23,8 +23,8 @@ var salvo5cellID = "salvoout5";
 
                 // record center point when starting the very first a drag
                 startPos = {
-                    x: rect.left + rect.width  / 2,
-                    y: rect.top  + rect.height / 2
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
                 };
 
                 event.interactable.draggable({
@@ -44,7 +44,7 @@ var salvo5cellID = "salvoout5";
                 // translate the element
                 target.style.webkitTransform =
                     target.style.transform =
-                        'translate(' + x + 'px, ' + y + 'px)';
+                    'translate(' + x + 'px, ' + y + 'px)';
 
                 // update the posiion attributes
                 target.setAttribute('data-x', x);
@@ -56,21 +56,21 @@ var salvo5cellID = "salvoout5";
             }
         });
 
-       interact('.droppable:not(.salvoCell)').dropzone({
+        interact('.droppable:not(.salvoCell)').dropzone({
             accept: '.draggable',
             overlap: .5,
-           checker: function (dragEvent,         // related dragmove or dragend
-                              event,             // Touch, Pointer or Mouse Event
-                              dropped,           // bool default checker result
-                              dropzone,          // dropzone Interactable
-                              dropElement,       // dropzone elemnt
-                              draggable,         // draggable Interactable
-                              draggableElement) {// draggable element
+            checker: function (dragEvent,         // related dragmove or dragend
+                event,             // Touch, Pointer or Mouse Event
+                dropped,           // bool default checker result
+                dropzone,          // dropzone Interactable
+                dropElement,       // dropzone elemnt
+                draggable,         // draggable Interactable
+                draggableElement) {// draggable element
 
 
-// only allow drops into empty dropzone elements
-               return dropped && !dropElement.classList.contains('caught--it');
-           },
+                // only allow drops into empty dropzone elements
+                return dropped && !dropElement.classList.contains('caught--it');
+            },
 
 
             ondropactivate: function (event) {
@@ -82,11 +82,11 @@ var salvo5cellID = "salvoout5";
 
 
                 var draggableElement = event.relatedTarget,
-                    dropzoneElement  = event.target,
-                    dropRect         = interact.getElementRect(dropzoneElement),
-                    dropCenter       = {
-                        x: dropRect.left + dropRect.width  / 2,
-                        y: dropRect.top  + dropRect.height / 2
+                    dropzoneElement = event.target,
+                    dropRect = interact.getElementRect(dropzoneElement),
+                    dropCenter = {
+                        x: dropRect.left + dropRect.width / 2,
+                        y: dropRect.top + dropRect.height / 2
                     };
 
                 event.draggable.draggable({
@@ -117,8 +117,7 @@ var salvo5cellID = "salvoout5";
                 // console.log("Dropped!");
                 // console.log("related target: " + event.relatedTarget.parentNode);
                 console.log(event.relatedTarget.id + " dropped on cell: " + event.target.id);
-                switch (event.relatedTarget.id)
-                {
+                switch (event.relatedTarget.id) {
                     case "salvo1":
                         salvo1cellID = event.target.id;
                         break;
@@ -142,10 +141,10 @@ var salvo5cellID = "salvoout5";
 
             },
 
-           ondropmove: function (event) {
+            ondropmove: function (event) {
 
 
-           },
+            },
             ondropdeactivate: function (event) {
                 // remove active dropzone feedback
                 event.target.classList.remove('can--catch');
@@ -155,7 +154,7 @@ var salvo5cellID = "salvoout5";
                     event.target.id == salvo3cellID ||
                     event.target.id == salvo4cellID ||
                     event.target.id == salvo5cellID
-                ){
+                ) {
                     event.target.classList.add('caught--it');
                 }
             }
@@ -164,7 +163,7 @@ var salvo5cellID = "salvoout5";
 
     function getNodeIndex(node) {
         var index = 0;
-        while ( (node = node.previousSibling) ) {
+        while ((node = node.previousSibling)) {
             if (node.nodeType != 3 || !/^\s*$/.test(node.data)) {
                 index++;
             }
@@ -176,13 +175,13 @@ var salvo5cellID = "salvoout5";
         return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
     }
 
-    window.onload = function() {
+    window.onload = function () {
         init();
     }
 
 })();
 
-function resetSalvoCellIds(){
+function resetSalvoCellIds() {
     salvo1cellID = "salvoout1";
     salvo2cellID = "salvoout2";
     salvo3cellID = "salvoout3";
