@@ -21,6 +21,7 @@ window.addEventListener('load', function () {
 
 // refresco total
 function refreshGameView(){
+	console.log("Refresh");
 	$.ajax({
 		url: gpUrl, type: 'GET', success: function (data) {
 			gamePlayerData = data;
@@ -33,7 +34,7 @@ function refreshGameView(){
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
 			}
-			/*
+
 			if (gamePlayerData.gameState === "PLACESHIPS"){
 					$('#placingShipsBoard').show('puff', 'slow');
 			}
@@ -84,6 +85,7 @@ function refreshGameView(){
 							}, 5000);
 			}
 			if (gamePlayerData.gameState == "PLAY"){
+				    console.log("Play");
 					showSelf(gamePlayerData);
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
@@ -106,7 +108,7 @@ function refreshGameView(){
 									$('#errorSalvo').show( "slow" ).delay(3000).hide( "slow" );
 									console.log("No salvos to shoot!");
 							} else {
-									 let postUrl ='/api/games/players/' +etParameterByName("gp") + '/salvoes';
+									 let postUrl ='/api/games/players/' +getParameterByName("gp") + '/salvoes';
 									 $.post({url: postUrl,data: salvoJSON,dataType: "text",contentType: "application/json"})
 													 .done(function (response) {
 															 console.log(response);
@@ -131,8 +133,7 @@ function refreshGameView(){
 					$('#battleGrids').show('puff', 'slow');
 					$('#salvoBlock').show('puff', 'slow');
 					$('#gameRecordBlock').show('puff', 'slow');
-			}*/
-
+			}
 		},
 		error: function (e) {
 			console.log(e);
@@ -143,7 +144,6 @@ function refreshGameView(){
 		}
 	});
 }
-
 
 function desloguear() {
 	$.post("/api/logout")
@@ -156,17 +156,18 @@ function desloguear() {
 		});
 }
 
-/*
 function makePostUrl() {
+    var gamePlayerID =  getParameterByName("gp");
+    return '/api/games/players/' + gamePlayerID + '/ships';
+}
+function makePostUrlShips() {
 	var gamePlayerID = getParameterByName();
 	return '/api/games/players/' + gamePlayerID + '/ships';
 }
-
 function makePostUrlSalvoes() {
 	var gamePlayerID = getParameterByName();
 	return '/api/games/players/' + gamePlayerID + '/salvoes';
 }
-*/
 
 
 function showSelf(gamePlayerData) {
@@ -180,7 +181,7 @@ function showSelf(gamePlayerData) {
 			youID = gamePlayer.player.id;
 		} else {
 			viewer = gamePlayer.player.email;
-			$('#OpponentPlayerName').removeClass('waitingPlayer');
+			$('#OpponentPlayerNamakePostUrlme').removeClass('waitingPlayer');
 		}
 	});
 
@@ -198,22 +199,20 @@ function showSelf(gamePlayerData) {
 	gamePlayerData.ships.forEach(function (ship) {
 
 		let firstCellID;
-		firstCellID = "#p1_" + ship.locations[0];
-		if (ship.locations[0].substring(1) === ship.locations[1].substring(1)) {
+		firstCellID = "#p1_" + ship.shipLocations[0];
+		if (ship.shipLocations[0].substring(1) === ship.shipLocations[1].substring(1)) {
 			$(firstCellID).html('<img class="shipsImgOnSelfGridVer" src="img/' + ship.type + 'ver.png">');
 		} else {
 			$(firstCellID).html('<img class="shipsImgOnSelfGridHor" src="img/' + ship.type + 'hor.png">');
 		}
 		// console.log(ship.type);
-		ship.locations.forEach(function (location) {
+		ship.shipLocations.forEach(function (location) {
 			var cellID = "#p1_" + location;
 			$(cellID).addClass("shipCell");
 			//     console.log(location);
 		});
 	});
-
-	gamePlayerData.salvoes.forEach(function (salvo) {
-
+	gamePlayerData.hits.self.forEach(function (salvo) {
 		//  console.log("Turn: " + salvo.turn);
 		salvo.locations.forEach(function (location) {
 			var cellID;
@@ -240,7 +239,7 @@ function showSelf(gamePlayerData) {
 	});
 
 	gamePlayerData.hits.opponent.forEach(function (playTurn) {
-		playTurn.hitLocations.forEach(function (hitCell) {
+		playTurn.locations.forEach(function (hitCell) {
 			cellID = "#" + hitCell;
 			$(cellID).addClass("hitCell");
 		});
@@ -294,31 +293,7 @@ function createTable(player) {
 	mytable.appendTo(gridId);
 }
 
-function postShipLocations(postUrl) {
-	$.post({
-		url: postUrl,
-		data: shipsJSON,
-		dataType: "text",
-		contentType: "application/json"
-	})
-		.done(function (response) {
-			console.log(response);
-			$('#okShips').text(JSON.parse(response).OK);
-			$('#okShips').show("slow").delay(3000).hide("slow");
-			setTimeout(
-				function () {
-					$('#placingShipsBoard').hide("slow");
-					refreshGameView();
 
-				}, 4000);
-
-		})
-		.fail(function (response) {
-			console.log(response);
-			$('#errorShips').text(JSON.parse(response.responseText).error);
-			$('#errorShips').show("slow").delay(4000).hide("slow");
-		})
-}
 
 
 function displayOverlay(text) {
@@ -384,6 +359,7 @@ function makeGameRecordTable(hitsArray, gameRecordTableId) {
 		playerTag = "#";
 	}
 
+    /*
 	hitsArray.forEach(function (playTurn) {
 		let hitsReport = "";
 		if (playTurn.damages.carrierHits > 0) {
@@ -439,6 +415,7 @@ function makeGameRecordTable(hitsArray, gameRecordTableId) {
 		$('<tr><td class="textCenter">' + playTurn.turn + '</td><td>' + hitsReport + '</td></tr>').prependTo(tableId);
 
 	});
+	*/
 	$('#shipsLeftSelfCount').text(shipsAfloat);
 }
 

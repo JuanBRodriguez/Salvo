@@ -67,7 +67,9 @@ public class SalvoController {
     dto.put("idGame", gamePlayer.getId());
     dto.put("creationDate", gamePlayer.getGame().getCreationDate());
     dto.put("gamePlayers", gamePlayer.getGame().getAllGamePlayer(gamePlayer.getGame().getGamePlayers()));
+    dto.put("gameState", "PLAY");
     dto.put("ships", gamePlayer.getShips());
+    dto.put("hits", gamePlayer.getHits(gamePlayer.getGame().getGamePlayers(), player));
     dto.put("salvoes", gamePlayer.getAllSalvoes(gamePlayer.getGame().getGamePlayers()));
 
     return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -115,20 +117,20 @@ public class SalvoController {
     }
   }
 
-  @RequestMapping(path = "/games/players/{gpId}/ship", method = RequestMethod.POST)
+  @RequestMapping(path = "/games/players/{gpId}/ships", method = RequestMethod.POST)
   public ResponseEntity<Map<String, Object>> addShips(@PathVariable Long gpId, @RequestBody List<Ship> ships, Authentication auth) {
 
     if (isGuest(auth)) {
-      return new ResponseEntity<>(GameController.makeMap("error: Des Autorizado, usuario no logeado", ""), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(GameController.makeMap("error: Des Autorizado, usuario no logeado", "usuario no logeado"), HttpStatus.UNAUTHORIZED);
     }
     Player player = playerRepository.findByUserName(auth.getName()).orElse(null);
     GamePlayer gamePlayer = gamePlayerRepository.findById(gpId).orElse(null);
 
     if (player.getId() != gamePlayer.getPlayer().getId()) {
-      return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado", ""), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado", "jugador equivocado"), HttpStatus.UNAUTHORIZED);
     }
     if (!gamePlayer.getShips().isEmpty()) {
-      return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados", ""), HttpStatus.FORBIDDEN);
+      return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados", "ya tienes barcos"), HttpStatus.FORBIDDEN);
     }
     ships.stream().map(ship -> {
       ship.setGamePlayer(gamePlayer);
@@ -136,7 +138,41 @@ public class SalvoController {
     }).collect(Collectors.toList());
     //ships.setGamePlayer(gamePlayer);
     //shipRepository.save(ships);
-    return new ResponseEntity<>(GameController.makeMap("ships correctos", " "), HttpStatus.CREATED);
+    return new ResponseEntity<>(GameController.makeMap("ships correctos", ships), HttpStatus.CREATED);
   }
+
+    @RequestMapping(path = "/games/players/{gpId}/salvoes", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> addSalvoes(@PathVariable Long gpId, @RequestBody List<Ship> ships, Authentication auth) {
+
+        if (isGuest(auth)) {
+            return new ResponseEntity<>(GameController.makeMap("error: Des Autorizado, usuario no logeado", "usuario no logeado"), HttpStatus.UNAUTHORIZED);
+        }
+        Player player = playerRepository.findByUserName(auth.getName()).orElse(null);
+        GamePlayer gamePlayer = gamePlayerRepository.findById(gpId).orElse(null);
+
+        if (player.getId() != gamePlayer.getPlayer().getId()) {
+            return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado", "jugador equivocado"), HttpStatus.UNAUTHORIZED);
+        }
+        if (!gamePlayer.getShips().isEmpty()) {
+            return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados", "ya tienes barcos"), HttpStatus.FORBIDDEN);
+        }
+        ships.stream().map(ship -> {
+            ship.setGamePlayer(gamePlayer);
+            return shipRepository.save(ship);
+        }).collect(Collectors.toList());
+        //ships.setGamePlayer(gamePlayer);
+        //shipRepository.save(ships);
+        return new ResponseEntity<>(GameController.makeMap("ships correctos", ships), HttpStatus.CREATED);
+    }
+
+  @RequestMapping("/leaderBoard")
+  public  List<Map<String,Object>> leaderBoard(){
+
+    return  playerRepository.findAll()
+            .stream()
+            .map(player  ->  player.makePlayerScoreDTO())
+            .collect(Collectors.toList());
+  }
+
 
 }

@@ -81,12 +81,32 @@ public class GamePlayer {
         dto.put("player", this.getPlayer().makePlayerDTO());
         return dto;
     }
+    public Map<String, Object> getHits(Set<GamePlayer> gamePlayers, Player player) {
+        Map<String, Object> hits = new LinkedHashMap<String, Object>();
+        List<Map<String, Object>> self =new ArrayList<>();
+        List<Map<String, Object>> oppo =new ArrayList<>();
+
+        List<Map<String, Object>> inu = gamePlayers.stream().flatMap(GP -> GP.getSalvos().stream()
+                        .map(Sal -> {
+                                        if (Sal.getGamePlayer().getPlayer().getUserName() == player.getUserName()){
+                                            self.add(Sal.makeSalvoDTO());
+                                            return Sal.makeSalvoDTO();
+                                        }else{
+                                            oppo.add(Sal.makeSalvoDTO());
+                                            return Sal.makeSalvoDTO();
+                                        }
+                                    }
+                                    )).collect(Collectors.toList());
+        hits.put("opponent", oppo );
+        hits.put("self", self);
+        return hits;
+    }
     public List<Map<String, Object>> getAllSalvoes(Set <GamePlayer> gamePlayers) {
         return gamePlayers
                 .stream()
                 .flatMap(GP -> GP.getSalvos()
-                                    .stream()
-                                    .map(Sal -> Sal.makeSalvoDTO()))
+                        .stream()
+                        .map(Sal -> Sal.makeSalvoDTO()))
                 .collect(Collectors.toList());
     }
 

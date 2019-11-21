@@ -18,6 +18,31 @@ $('#save-grid').click(function () {
     postShipLocations(makePostUrl());
 });
 
+function postShipLocations(postUrl) {
+	$.post({
+		url: postUrl,
+		data: shipsJSON,
+		dataType: "text",
+		contentType: "application/json"
+	})
+		.done(function (response) {
+			console.log(response);
+			$('#okShips').text(JSON.parse(response).OK);
+			$('#okShips').show("slow").delay(3000).hide("slow");
+			setTimeout(
+				function () {
+					$('#placingShipsBoard').hide("slow");
+					refreshGameView();
+
+				}, 4000);
+
+		})
+		.fail(function (response) {
+			console.log(response);
+			$('#errorShips').text(JSON.parse(response.responseText).error);
+			$('#errorShips').show("slow").delay(4000).hide("slow");
+		})
+}
 
 $(function () {
     var options = {

@@ -124,109 +124,109 @@ public class SalvoApplication {
 
 			//juego 1 1er jugador
 			List<String> pos1 = Arrays.asList("H2", "H3", "H4");
-			Ship s1 = new Ship("Destroyer", pos1, gp1);
+			Ship s1 = new Ship("destroyer", pos1, gp1);
 			List<String> pos2 = Arrays.asList("E1", "F1", "G1");
-			Ship s2 = new Ship("Submarine", pos2, gp1);
+			Ship s2 = new Ship("submarine", pos2, gp1);
 			List<String> pos3 = Arrays.asList("B4", "B5");
-			Ship s3 = new Ship("Patrol Boat", pos3, gp1);
+			Ship s3 = new Ship("patrolboat", pos3, gp1);
 			shipRepository.save(s1);
 			shipRepository.save(s2);
 			shipRepository.save(s3);
 
 			//juego 1 2do jugador
 			List<String> pos4 = Arrays.asList("B5", "C5", "D5");
-			Ship s4 = new Ship("Destroyer", pos4, gp2);
+			Ship s4 = new Ship("destroyer", pos4, gp2);
 			List<String> pos5 = Arrays.asList("F1", "F2");
-			Ship s5 = new Ship("Patrol Boat", pos5, gp2);
+			Ship s5 = new Ship("patrolboat", pos5, gp2);
 			shipRepository.save(s4);
 			shipRepository.save(s5);
 
 			//juego 2 1er jugador
 			List<String> pos6 = Arrays.asList("B5", "C5", "D5");
-			Ship s6 = new Ship("Destroyer", pos6, gp3);
+			Ship s6 = new Ship("destroyer", pos6, gp3);
 			List<String> pos7 = Arrays.asList("C6", "C7");
-			Ship s7 = new Ship("Patrol Boat", pos7, gp3);
+			Ship s7 = new Ship("patrolboat", pos7, gp3);
 			shipRepository.save(s6);
 			shipRepository.save(s7);
 
 			//juego 2 2 jugador
 
 			List<String> pos8 = Arrays.asList("A2", "A3", "A4");
-			Ship s8 = new Ship("Submarine", pos8, gp4);
+			Ship s8 = new Ship("submarine", pos8, gp4);
 			shipRepository.save(s8);
 			List<String> pos9 = Arrays.asList("G6", "H6");
-			Ship S9 = new Ship("Patrol Boat", pos9, gp4);
+			Ship S9 = new Ship("patrolboat", pos9, gp4);
 			shipRepository.save(S9);
 
 			//juego 3 1 jugador
 			List<String> pos10 = Arrays.asList("B5", "C5", "D5");
-			Ship s10 = new Ship("Destroyer", pos10, gp5);
+			Ship s10 = new Ship("destroyer", pos10, gp5);
 			List<String> pos11 = Arrays.asList("C6", "C7");
-			Ship s11 = new Ship("Patrol Boat", pos11, gp5);
+			Ship s11 = new Ship("patrolboat", pos11, gp5);
 			shipRepository.save(s10);
 			shipRepository.save(s11);
 
 			//juego 3 2 jugador
 			List<String> pos12 = Arrays.asList("A2", "A3", "A4");
-			Ship s12 = new Ship("Submarine", pos12, gp6);
+			Ship s12 = new Ship("submarine", pos12, gp6);
 			shipRepository.save(s12);
 			List<String> pos13 = Arrays.asList("G6", "H6");
-			Ship s13 = new Ship("Destroyer", pos13, gp6);
+			Ship s13 = new Ship("destroyer", pos13, gp6);
 			shipRepository.save(s13);
 
 			//juego 4 1 jugador
 			List<String> pos14 = Arrays.asList("B5", "C5", "D5");
-			Ship s14 = new Ship("Destroyer", pos14, gp7);
+			Ship s14 = new Ship("destroyer", pos14, gp7);
 			List<String> pos15 = Arrays.asList("C6", "C7");
-			Ship s15 = new Ship("Patrol Boat", pos15, gp7);
+			Ship s15 = new Ship("patrolboat", pos15, gp7);
 			shipRepository.save(s14);
 			shipRepository.save(s15);
 
 			//juego 4 2 jugador
 			List<String> pos16 = Arrays.asList("A2", "A3", "A4");
-			Ship s16 = new Ship("Destroyer", pos16, gp8);
+			Ship s16 = new Ship("destroyer", pos16, gp8);
 			List<String> pos17 = Arrays.asList("G6", "H6");
-			Ship s17 = new Ship("Patrol Boat", pos17, gp8);
+			Ship s17 = new Ship("patrolboat", pos17, gp8);
 			shipRepository.save(s16);
 			shipRepository.save(s17);
 
 			//juego 5 1 jugador
 			List<String> pos18 = Arrays.asList("B5", "C5", "D5");
-			Ship s18 = new Ship("Destroyer", pos18, gp9);
+			Ship s18 = new Ship("destroyer", pos18, gp9);
 			List<String> pos19 = Arrays.asList("C6", "C7");
-			Ship s19 = new Ship("Patrol Boat", pos19, gp9);
+			Ship s19 = new Ship("patrolboat", pos19, gp9);
 			shipRepository.save(s18);
 			shipRepository.save(s19);
 
 			//juego 5 2 jugador
 			List<String> pos20 = Arrays.asList("A2", "A3", "A4");
-			Ship s20 = new Ship("Submarine", pos20, gp10);
+			Ship s20 = new Ship("submarine", pos20, gp10);
 			List<String> pos21 = Arrays.asList("G6", "H6");
-			Ship s21 = new Ship("Patrol Boat", pos21, gp10);
+			Ship s21 = new Ship("patrolboat", pos21, gp10);
 			shipRepository.save(s20);
 			shipRepository.save(s21);
 
 			//juego 6 1 jugador
 			List<String> pos22 = Arrays.asList("B5", "C5", "D5");
-			Ship s22 = new Ship("Destroyer", pos22, gp11);
+			Ship s22 = new Ship("destroyer", pos22, gp11);
 			List<String> pos23 = Arrays.asList("C6", "C7");
-			Ship s23 = new Ship("Patrol Boat", pos23, gp11);
+			Ship s23 = new Ship("patrolboat", pos23, gp11);
 			shipRepository.save(s22);
 			shipRepository.save(s23);
 
 			//juego 8 1 jugador
 			List<String> pos24 = Arrays.asList("B5", "C5", "D5");
-			Ship s24 = new Ship("Destroyer", pos24, gp13);
+			Ship s24 = new Ship("destroyer", pos24, gp13);
 			List<String> pos25 = Arrays.asList("C6", "C7");
-			Ship s25 = new Ship("Patrol Boat", pos25, gp13);
+			Ship s25 = new Ship("patrolboat", pos25, gp13);
 			shipRepository.save(s24);
 			shipRepository.save(s25);
 
 			//juego 8 2 jugador
 			List<String> pos26 = Arrays.asList("A2", "A3", "A4");
-			Ship s26 = new Ship("Submarine", pos26, gp14);
+			Ship s26 = new Ship("submarine", pos26, gp14);
 			List<String> pos27 = Arrays.asList("G6", "H6");
-			Ship s27 = new Ship("Patrol Boat", pos27, gp14);
+			Ship s27 = new Ship("patrolboat", pos27, gp14);
 			shipRepository.save(s26);
 			shipRepository.save(s27);
 
