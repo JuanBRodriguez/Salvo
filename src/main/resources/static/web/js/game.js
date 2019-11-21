@@ -338,11 +338,8 @@ function makeSalvoJSON() {
 	if (salvo5cellID !== "salvoout1" && salvo5cellID !== "salvoout2" && salvo5cellID !== "salvoout3" && salvo5cellID !== "salvoout4" && salvo5cellID !== "salvoout5") {
 		salvoPositions.push(salvo5cellID);
 	}
-	salvoObject = {
-		salvoLocations: salvoPositions
-	}
 
-	salvoJSON = JSON.stringify(salvoObject);
+	salvoJSON = JSON.stringify({locations: salvoPositions});
 	console.log(salvoJSON);
 }
 

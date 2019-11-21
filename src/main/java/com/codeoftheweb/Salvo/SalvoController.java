@@ -24,6 +24,8 @@ public class SalvoController {
   private PasswordEncoder passwordEncoder;
   @Autowired
   private ShipRepository shipRepository;
+  @Autowired
+  private SalvoRepository salvoRepository;
 
   @RequestMapping("/games")
   public Map<String, Object> getGames(Authentication authentication) {
@@ -136,13 +138,11 @@ public class SalvoController {
       ship.setGamePlayer(gamePlayer);
       return shipRepository.save(ship);
     }).collect(Collectors.toList());
-    //ships.setGamePlayer(gamePlayer);
-    //shipRepository.save(ships);
     return new ResponseEntity<>(GameController.makeMap("ships correctos", ships), HttpStatus.CREATED);
   }
 
     @RequestMapping(path = "/games/players/{gpId}/salvoes", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> addSalvoes(@PathVariable Long gpId, @RequestBody List<Ship> ships, Authentication auth) {
+    public ResponseEntity<Map<String, Object>> addSalvoes(@PathVariable Long gpId, @RequestBody Salvo salvo, Authentication auth) {
 
         if (isGuest(auth)) {
             return new ResponseEntity<>(GameController.makeMap("error: Des Autorizado, usuario no logeado", "usuario no logeado"), HttpStatus.UNAUTHORIZED);
@@ -153,16 +153,17 @@ public class SalvoController {
         if (player.getId() != gamePlayer.getPlayer().getId()) {
             return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado", "jugador equivocado"), HttpStatus.UNAUTHORIZED);
         }
-        if (!gamePlayer.getShips().isEmpty()) {
+        /*
+        if (!gamePlayer.getSalvos().isEmpty()) {
             return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados", "ya tienes barcos"), HttpStatus.FORBIDDEN);
         }
-        ships.stream().map(ship -> {
-            ship.setGamePlayer(gamePlayer);
-            return shipRepository.save(ship);
-        }).collect(Collectors.toList());
-        //ships.setGamePlayer(gamePlayer);
-        //shipRepository.save(ships);
-        return new ResponseEntity<>(GameController.makeMap("ships correctos", ships), HttpStatus.CREATED);
+        */
+        if (gamePlayer.getSalvos().isEmpty()){
+            salvo
+        }
+        salvo.setGamePlayer(gamePlayer);
+        salvoRepository.save(salvo);
+        return new ResponseEntity<>(GameController.makeMap("Salvos guardados", salvo), HttpStatus.CREATED);
     }
 
   @RequestMapping("/leaderBoard")
