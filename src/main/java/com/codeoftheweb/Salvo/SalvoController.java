@@ -153,17 +153,18 @@ public class SalvoController {
         if (player.getId() != gamePlayer.getPlayer().getId()) {
             return new ResponseEntity<>(GameController.makeMap("error: jugador equivocado", "jugador equivocado"), HttpStatus.UNAUTHORIZED);
         }
-        /*
-        if (!gamePlayer.getSalvos().isEmpty()) {
-            return new ResponseEntity<>(GameController.makeMap("error: ships ya seteados", "ya tienes barcos"), HttpStatus.FORBIDDEN);
-        }
-        */
+
         if (gamePlayer.getSalvos().isEmpty()){
-            salvo
+            salvo.setTurno(1);
+        }
+        if (gamePlayer.getSalvos().size() <= gamePlayer.getGame().getOppo(gpId).getSalvos().size()){
+            salvo.setTurno(gamePlayer.getSalvos().size()+1);
+        } else {
+            return new ResponseEntity<>(GameController.makeMap("Espere a que finalice el turno", ""), HttpStatus.UNAUTHORIZED);
         }
         salvo.setGamePlayer(gamePlayer);
         salvoRepository.save(salvo);
-        return new ResponseEntity<>(GameController.makeMap("Salvos guardados", salvo), HttpStatus.CREATED);
+        return new ResponseEntity<>(GameController.makeMap("Salvos guardados",""), HttpStatus.CREATED);
     }
 
   @RequestMapping("/leaderBoard")

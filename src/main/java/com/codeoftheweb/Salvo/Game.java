@@ -76,4 +76,8 @@ public class Game {
     public GamePlayer getOneGamePlayer() {
         return this.gamePlayers.iterator().next();
     }
+
+    public GamePlayer getOppo(long id){
+        return this.gamePlayers.stream().filter(gp -> gp.getId() !=id ).findFirst().get();
+    }
 }

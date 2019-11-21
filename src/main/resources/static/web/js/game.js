@@ -109,10 +109,9 @@ function refreshGameView(){
 									console.log("No salvos to shoot!");
 							} else {
 									 let postUrl ='/api/games/players/' +getParameterByName("gp") + '/salvoes';
-									 $.post({url: postUrl,data: salvoJSON,dataType: "text",contentType: "application/json"})
+									 $.post({url: postUrl, data: salvoJSON, dataType: "text", contentType: "application/json"})
 													 .done(function (response) {
 															 console.log(response);
-															 //mjs
 															 $('#okSalvo').text(JSON.parse(response).OK);
 															 $('#okSalvo').show( "slow" ).delay(3000).hide( "slow" );
 															 $('#salvoBlock').hide("slow");
@@ -124,7 +123,7 @@ function refreshGameView(){
 													 })
 													 .fail(function (response) {
 															 console.log(response);
-															 $('#errorSalvo').text(JSON.parse(response.responseText).error);
+															 $('#errorSalvo').text(response.responseText);
 															 $('#errorSalvo').show( "slow" ).delay(4000).hide( "slow" );
 													 });
 							}

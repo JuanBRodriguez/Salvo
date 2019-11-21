@@ -70,7 +70,7 @@ public class GamePlayer {
     public Set<Ship> getShips() {
         return ships;
     }
-
+    @JsonIgnore
     public Set<Salvo> getSalvos() {
         return salvos;
     }
@@ -89,10 +89,10 @@ public class GamePlayer {
         List<Map<String, Object>> inu = gamePlayers.stream().flatMap(GP -> GP.getSalvos().stream()
                         .map(Sal -> {
                                         if (Sal.getGamePlayer().getPlayer().getUserName() == player.getUserName()){
-                                            self.add(Sal.makeSalvoDTO());
+                                            oppo.add(Sal.makeSalvoDTO());
                                             return Sal.makeSalvoDTO();
                                         }else{
-                                            oppo.add(Sal.makeSalvoDTO());
+                                            self.add(Sal.makeSalvoDTO());
                                             return Sal.makeSalvoDTO();
                                         }
                                     }
