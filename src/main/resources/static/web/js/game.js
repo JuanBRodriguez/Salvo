@@ -321,7 +321,6 @@ function removeOverlay() {
 
 function makeSalvoJSON() {
 	salvoPositions = [];
-	salvoObject = {};
 	if (salvo1cellID !== "salvoout1" && salvo1cellID !== "salvoout2" && salvo1cellID !== "salvoout3" && salvo1cellID !== "salvoout4" && salvo1cellID !== "salvoout5") {
 		salvoPositions.push(salvo1cellID);
 	}

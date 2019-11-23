@@ -78,6 +78,6 @@ public class Game {
     }
 
     public GamePlayer getOppo(long id){
-        return this.gamePlayers.stream().filter(gp -> gp.getId() !=id ).findFirst().get();
+        return this.gamePlayers.stream().filter(gp -> gp.getId() != id ).findFirst().get();
     }
 }
