@@ -72,6 +72,7 @@ public class SalvoController {
     dto.put("gameState", "PLAY");
     dto.put("ships", gamePlayer.getShips());
     dto.put("hits", gamePlayer.getHits(gamePlayer.getGame().getGamePlayers(), player));
+    //dto.put("hits", gamePlayer.getHits());
     dto.put("salvoes", gamePlayer.getAllSalvoes(gamePlayer.getGame().getGamePlayers()));
 
     return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -157,7 +158,7 @@ public class SalvoController {
         if (gamePlayer.getSalvos().isEmpty()){
             salvo.setTurno(1);
         }
-        if (gamePlayer.getSalvos().size() <= gamePlayer.getGame().getOppo(gpId).getSalvos().size()){
+        if (gamePlayer.getSalvos().size() <= gamePlayer.getOppo().getSalvos().size()){
             salvo.setTurno(gamePlayer.getSalvos().size()+1);
         } else {
             return new ResponseEntity<>(GameController.makeMap("Espere a que finalice el turno", ""), HttpStatus.UNAUTHORIZED);

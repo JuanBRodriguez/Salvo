@@ -225,15 +225,13 @@ function showSelf(gamePlayerData) {
 				cellID = "#p1_" + location;
 				if ($(cellID).hasClass("shipCell")) {
 					$(cellID).addClass("hitCell");
-
-					//          console.log("Opponent Hits Ship on " + location);
+					//console.log("Opponent Hits Ship on " + location);
 				} else {
 					$(cellID).addClass("salvoCellSelf");
 					$(cellID).text(salvo.turn);
-					//          console.log("Opponent salvo on " + location);
+					//console.log("Opponent salvo on " + location);
 				}
 			}
-
 		});
 	});
 
@@ -291,8 +289,6 @@ function createTable(player) {
 	gridLabel.appendTo(gridId);
 	mytable.appendTo(gridId);
 }
-
-
 
 
 function displayOverlay(text) {
@@ -353,7 +349,6 @@ function makeGameRecordTable(hitsArray, gameRecordTableId) {
 	if (gameRecordTableId == "gameRecordSelfTable") {
 		playerTag = "#";
 	}
-
     /*
 	hitsArray.forEach(function (playTurn) {
 		let hitsReport = "";
