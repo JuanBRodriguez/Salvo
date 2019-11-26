@@ -71,8 +71,8 @@ public class SalvoController {
     dto.put("gamePlayers", gamePlayer.getGame().getAllGamePlayer(gamePlayer.getGame().getGamePlayers()));
     dto.put("gameState", "PLAY");
     dto.put("ships", gamePlayer.getShips());
-    dto.put("hits", gamePlayer.getHits(gamePlayer.getGame().getGamePlayers(), player));
-    //dto.put("hits", gamePlayer.getHits());
+    //dto.put("hits", gamePlayer.getHits(gamePlayer.getGame().getGamePlayers(), player));
+    dto.put("hits", gamePlayer.getHits());
     dto.put("salvoes", gamePlayer.getAllSalvoes(gamePlayer.getGame().getGamePlayers()));
 
     return new ResponseEntity<>(dto, HttpStatus.OK);

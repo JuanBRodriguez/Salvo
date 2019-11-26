@@ -25,7 +25,7 @@ function refreshGameView(){
 	$.ajax({
 		url: gpUrl, type: 'GET', success: function (data) {
 			gamePlayerData = data;
-			$('#gameStateBlock').html('<span class="gameStateLabel">TURN: </span><span class="gameStateLabelBig">' + /*getTurn(gamePlayerData) +*/ '</span><span class="gameStateLabel"> ACTION REQUIRED: </span><span class="gameStateLabelBig">' + "gamePlayerData.gameState" + '</span>');
+			$('#gameStateBlock').html('<span class="gameStateLabel">TURN: </span><span class="gameStateLabelBig">' + /*getTurn(gamePlayerData) +*/ '</span><span class="gameStateLabel"> ACTION REQUIRED: </span><span class="gameStateLabelBig">' + gamePlayerData.gameState + '</span>');
 
 			console.log("waitState: " + waitState);
 
@@ -349,7 +349,7 @@ function makeGameRecordTable(hitsArray, gameRecordTableId) {
 	if (gameRecordTableId == "gameRecordSelfTable") {
 		playerTag = "#";
 	}
-    /*
+
 	hitsArray.forEach(function (playTurn) {
 		let hitsReport = "";
 		if (playTurn.damages.carrierHits > 0) {
@@ -405,7 +405,6 @@ function makeGameRecordTable(hitsArray, gameRecordTableId) {
 		$('<tr><td class="textCenter">' + playTurn.turn + '</td><td>' + hitsReport + '</td></tr>').prependTo(tableId);
 
 	});
-	*/
 	$('#shipsLeftSelfCount').text(shipsAfloat);
 }
 
