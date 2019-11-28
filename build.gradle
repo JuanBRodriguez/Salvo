@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.7.RELEASE'
 	id 'java'
+	id "io.swagger.core.v3.swagger-gradle-plugin" version "2.1.0"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -24,4 +25,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile("org.springframework.boot:spring-boot-starter-security")
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
 }

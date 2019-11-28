@@ -6,8 +6,8 @@ body {
 .bannerTitle {
     text-align: center;
     background: #00000038;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    /* border-top-left-radius: 20px;
+    border-top-right-radius: 20px;*/
 }
 
 .blockInline {

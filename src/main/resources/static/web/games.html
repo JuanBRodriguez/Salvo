@@ -10,33 +10,42 @@
 
 <body>
   <div class="container-fluid">
-    <div class="bannerTitle">
-      <!-- <img class="bannerImageGames" src="img/image.png"> -->
-      <h1> SALVO WARSHIPS</h1>
-    </div>
-    <div id="loginBlock" class="row">
-      <div class="col-sm-12">
-        <div class="row">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4" id="deslogueo">
-            Current player: <span id="currentPlayer"></span>
-            <button type="submit" id="logout" onclick="desloguear()" class="btn btn-info">Log out</button>
-          </div>
-          <div class="col-sm-8" id="logueo">
-            <form class="form-inline" id="login-form" onsubmit="return false">
-              <label for="email">Name:</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
-              <label for="password">Password: </label>
-              <input type="password" class="form-control" id="password" required>
-              <button type="submit" onclick="login()" class="form-control submitbutton btn btn-info">Login</button>
-              <button type="submit" onclick="registrar()"
-                class="form-control submitbutton btn btn-info">Register</button>
-            </form>
-          </div>
 
-        </div>
+    <!--Navegador  -->
+    <nav class="navbar navbar-expand-lg bannerTitle">
+
+      <!-- <img src="img/image2.png" width="50" height="50" alt="logo" class="icon"> -->
+
+      <div class="">
+        <h1> SALVO WARSHIPS</h1>
       </div>
-    </div>
+
+      <div id="loginBlock" class=" collapse navbar-collapse">
+
+            <div class="col" id="logueo">
+              <form class="form-inline" id="login-form" onsubmit="return false">
+                <!-- <label for="email">Name:</label> -->
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email"
+                  required>
+                <!-- <label for="password">Password: </label> -->
+                <input type="password" class="form-control" id="password" placeholder="password" required>
+                <button type="submit" onclick="login()" class="form-control submitbutton btn btn-info">Login</button>
+                <button type="submit" onclick="registrar()"
+                  class="form-control submitbutton btn btn-info">Register</button>
+              </form>
+            </div>
+
+            <div class="col" id="deslogueo">
+              Current player: <span id="currentPlayer"></span>
+              <button type="submit" id="logout" onclick="desloguear()" class="btn btn-info">Log out</button>
+            </div>
+
+      </div>
+
+    </nav>
+
+
+
     <h3 id="signupSuccess" class="textCenter">Player created Successfully!</h3>
     <h3 id="errorSignup" class="textCenter"></h3>
     <h3 id="loginSuccess" class="textCenter">Login Successful!</h3>
@@ -47,7 +56,7 @@
 
     <form class="textCenter" id="createGameForm">
       <!-- <input class="btn btn-warning" type="submit" id="createGame" value="CREATE NEW GAME" /> -->
-      <button type="button" onclick="crearGame()" id="createGame"  class="btn btn-warning">Crear Juego</button>
+      <button type="button" onclick="crearGame()" id="createGame" class="btn btn-warning">Crear Juego</button>
     </form>
 
     <div class="row">
@@ -88,38 +97,38 @@
             <tbody>
             </tbody> -->
             <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Total Score</th>
-                  <th scope="col">Won</th>
-                  <th scope="col">Lost</th>
-                  <th scope="col">Tied</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td id="na0"></td>
-                  <td id="to0"></td>
-                  <td id="wo0"></td>
-                  <td id="lo0"></td>
-                  <td id="ti0"></td>
-                </tr>
-                <tr>
-                  <td id="na1"></td>
-                  <td id="to1"></td>
-                  <td id="wo1"></td>
-                  <td id="lo1"></td>
-                  <td id="ti1"></td>
-                </tr>
-                <tr>
-                  <td id="na2"></td>
-                  <td id="to2"></td>
-                  <td id="wo2"></td>
-                  <td id="lo2"></td>
-                  <td id="ti2"></td>
-                </tr>
-      
-              </tbody>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Total Score</th>
+                <th scope="col">Won</th>
+                <th scope="col">Lost</th>
+                <th scope="col">Tied</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="na0"></td>
+                <td id="to0"></td>
+                <td id="wo0"></td>
+                <td id="lo0"></td>
+                <td id="ti0"></td>
+              </tr>
+              <tr>
+                <td id="na1"></td>
+                <td id="to1"></td>
+                <td id="wo1"></td>
+                <td id="lo1"></td>
+                <td id="ti1"></td>
+              </tr>
+              <tr>
+                <td id="na2"></td>
+                <td id="to2"></td>
+                <td id="wo2"></td>
+                <td id="lo2"></td>
+                <td id="ti2"></td>
+              </tr>
+
+            </tbody>
           </table>
         </div>
       </div>

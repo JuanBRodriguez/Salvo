@@ -128,7 +128,7 @@ function desloguear() {
 // *******
 function crearGame() {
     console.log("creando juego");
-    $.post("/api/games")
+    $.post("/api/game")
         .done(function (data) {
             console.log(data);
             console.log("juego creado");
