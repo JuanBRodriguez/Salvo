@@ -88,7 +88,6 @@ function registrar() {
 
 // *******
 function login() {
-
     $.post("/api/login", {
             username: $("#email").val(),
             password: $("#password").val()

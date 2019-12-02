@@ -30,23 +30,6 @@ public class GameController {
   @Autowired
   private SalvoRepository salvoRepository;
 
-  @RequestMapping(path = "/game", method = RequestMethod.POST)
-  @ApiOperation(value = "Create Game")
-  public ResponseEntity<Map<String, Object>> createGame(Authentication authentication) {
-    if(isGuest(authentication)) {
-      return new ResponseEntity<>(makeMap("Error: ", "Usuario no logueado"), HttpStatus.UNAUTHORIZED);
-    }
-    Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
-
-    if (player == null){
-      return new ResponseEntity<>(makeMap("Error: ", "Usuario no valido"), HttpStatus.UNAUTHORIZED);
-    }
-    Game game = gameRepository.save(new Game());
-    GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
-
-    return new ResponseEntity<>(makeMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
-  }
-
   @RequestMapping("/game_view/{gamePlayerId}")
   @ApiOperation(value = "Game View Infomation")
   public ResponseEntity<Map<String, Object>> getGameView(@PathVariable Long gamePlayerId, Authentication authentication) {

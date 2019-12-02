@@ -84,8 +84,8 @@ public class GamePlayer {
         return dto;
     }
 
-    /*
-        public Map<String, Object> getHits() {
+
+        /*public Map<String, Object> getHits() {
             Map<String, Object> hits = new LinkedHashMap<String, Object>();
             List<Map<String, Object>> self =new ArrayList<>();
             List<Map<String, Object>> oppo =new ArrayList<>();
@@ -94,10 +94,10 @@ public class GamePlayer {
             this.getOppo().getSalvos().stream().map(Sal -> self.add(Sal.makeSalvoDTO())).collect(Collectors.toList());
 
             hits.put("opponent", oppo );
-            hits.put("self"self);
+            hits.put("self", self);
             return hits;
-        }
-     */
+        }*/
+
     public Map<String, Object> getHits() {
         Map<String, Object> hits = new LinkedHashMap<String, Object>();
         if (this.getGame().getGamePlayers().size()>1) {
@@ -109,6 +109,7 @@ public class GamePlayer {
         hits.put("self", calcHits(this));
         return hits;
     }
+
     private List<Map> calcHits(GamePlayer gamePlayer) {
         List<Map> hits  = new ArrayList<>();
 
@@ -136,8 +137,8 @@ public class GamePlayer {
                 Map<String, Object> hitsMapPerTurn = new LinkedHashMap<>();
                 Map<String, Object> damagesPerTurn = new LinkedHashMap<>();
 
-                List<String> salvoLocationsList = new ArrayList<>();
-                List<String> hitCellsList = new ArrayList<>();
+                Set<String> hitCellsList = new HashSet<>();
+                Set<String> missedCellsList = new HashSet<>();
 
                 for (String salvoShot : salvo.getLocations()) {
                     if (carrierLocation.contains(salvoShot)) {
@@ -145,30 +146,28 @@ public class GamePlayer {
                         carrierHitsInTurn++;
                         hitCellsList.add(salvoShot);
                         missedShots--;
-                    }
-                    if (battleshipLocation.contains(salvoShot)) {
+                    } else if (battleshipLocation.contains(salvoShot)) {
                         battleshipDamage++;
                         battleshipHitsInTurn++;
                         hitCellsList.add(salvoShot);
                         missedShots--;
-                    }
-                    if (submarineLocation.contains(salvoShot)) {
+                    }else if (submarineLocation.contains(salvoShot)) {
                         submarineDamage++;
                         submarineHitsInTurn++;
                         hitCellsList.add(salvoShot);
                         missedShots--;
-                    }
-                    if (destroyerLocation.contains(salvoShot)) {
+                    } else if (destroyerLocation.contains(salvoShot)) {
                         destroyerDamage++;
                         destroyerHitsInTurn++;
                         hitCellsList.add(salvoShot);
                         missedShots--;
-                    }
-                    if (patrolboatLocation.contains(salvoShot)) {
+                    }else if (patrolboatLocation.contains(salvoShot)) {
                         patrolboatDamage++;
                         patrolboatHitsInTurn++;
                         hitCellsList.add(salvoShot);
                         missedShots--;
+                    }else {
+                        missedCellsList.add(salvoShot);
                     }
                 }
                 damagesPerTurn.put("carrierHits", carrierHitsInTurn);
@@ -183,7 +182,8 @@ public class GamePlayer {
                 damagesPerTurn.put("patrolboat", patrolboatDamage);
 
                 hitsMapPerTurn.put("turn", salvo.getTurn());
-                hitsMapPerTurn.put("locations", hitCellsList);
+                hitsMapPerTurn.put("hitLocations", hitCellsList);
+                hitsMapPerTurn.put("locationsMissed", missedCellsList);
                 hitsMapPerTurn.put("damages", damagesPerTurn);
                 hitsMapPerTurn.put("missed", missedShots);
                 hits.add(hitsMapPerTurn);
@@ -191,6 +191,7 @@ public class GamePlayer {
         }
         return hits;
     }
+
 
     public List<Map<String, Object>> getAllSalvoes(Set <GamePlayer> gamePlayers) {
         return gamePlayers

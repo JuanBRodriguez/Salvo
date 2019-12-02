@@ -28,6 +28,22 @@ public class SalvoController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  @RequestMapping(path = "/game", method = RequestMethod.POST)
+  @ApiOperation(value = "Create Game")
+  public ResponseEntity<Map<String, Object>> createGame(Authentication authentication) {
+    if(isGuest(authentication)) {
+      return new ResponseEntity<>(makeMap("Error: ", "Usuario no logueado"), HttpStatus.UNAUTHORIZED);
+    }
+    Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
+
+    if (player == null){
+      return new ResponseEntity<>(makeMap("Error: ", "Usuario no valido"), HttpStatus.UNAUTHORIZED);
+    }
+    Game game = gameRepository.save(new Game());
+    GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
+
+    return new ResponseEntity<>(makeMap("gpid", gamePlayer.getId()), HttpStatus.CREATED);
+  }
 
   @RequestMapping("/games")
   @ApiOperation(value = "Games Information")

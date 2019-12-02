@@ -25,7 +25,7 @@ function refreshGameView(){
 	$.ajax({
 		url: gpUrl, type: 'GET', success: function (data) {
 			gamePlayerData = data;
-			$('#gameStateBlock').html('<span class="gameStateLabel">TURN: </span><span class="gameStateLabelBig">' + /*getTurn(gamePlayerData) +*/ '</span><span class="gameStateLabel"> ACTION REQUIRED: </span><span class="gameStateLabelBig">' + gamePlayerData.gameState + '</span>');
+			$('#gameStateBlock').html('<span class="gameStateLabel">TURN: </span><span class="gameStateLabelBig">' + getTurn(gamePlayerData) + '</span><span class="gameStateLabel"> ACTION REQUIRED: </span><span class="gameStateLabelBig">' + gamePlayerData.gameState + '</span>');
 
 			console.log("waitState: " + waitState);
 
@@ -211,35 +211,42 @@ function showSelf(gamePlayerData) {
 			//     console.log(location);
 		});
 	});
+
 	gamePlayerData.hits.self.forEach(function (salvo) {
 		//  console.log("Turn: " + salvo.turn);
-		salvo.locations.forEach(function (location) {
+		salvo.hitLocations.forEach(function (location) {
 			var cellID;
-			if (salvo.player == youID) {
+			/*if (salvo.player == youID) {
 				cellID = "#" + location;
 				$(cellID).addClass("salvoCell");
-
-				//        console.log("Your salvo on " + location);
+				console.log("Your salvo on " + location);
 				$(cellID).text(salvo.turn);
-			} else {
+			} else { */
 				cellID = "#p1_" + location;
 				if ($(cellID).hasClass("shipCell")) {
 					$(cellID).addClass("hitCell");
-					//console.log("Opponent Hits Ship on " + location);
+					console.log("Opponent Hits Ship on " + location);
 				} else {
 					$(cellID).addClass("salvoCellSelf");
 					$(cellID).text(salvo.turn);
 					//console.log("Opponent salvo on " + location);
 				}
-			}
+			//}
 		});
 	});
 
 	gamePlayerData.hits.opponent.forEach(function (playTurn) {
-		playTurn.locations.forEach(function (hitCell) {
+		playTurn.hitLocations.forEach(function (hitCell) {
 			cellID = "#" + hitCell;
 			$(cellID).addClass("hitCell");
+			$(cellID).removeClass("droppable");
 		});
+		playTurn.locationsMissed.forEach(function (hitCell) {
+        			cellID = "#" + hitCell;
+        			$(cellID).addClass("salvoCell");
+        			$(cellID).text(playTurn.turn);
+        			$(cellID).removeClass("droppable");
+        });
 	});
 }
 
