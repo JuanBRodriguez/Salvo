@@ -67,7 +67,7 @@ public class SalvoController {
       return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
     }
     if (playerRepository.findByUserName(username).orElse(null) != null) {
-      return new ResponseEntity<>("Name alredy in use", HttpStatus.FORBIDDEN);
+      return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
     }
     playerRepository.save(new Player(username, passwordEncoder.encode(password)));
     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -78,22 +78,22 @@ public class SalvoController {
   public ResponseEntity<Map<String, Object>> joinGame(@PathVariable Long gameId, Authentication authentication) {
 
     if (isGuest(authentication)) {
-      return new ResponseEntity<>(makeMap("error:","Usuario no logeado"), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(makeMap("error"," Usuario no logeado"), HttpStatus.UNAUTHORIZED);
     }
     Player player = playerRepository.findByUserName(authentication.getName()).orElse(null);
     Game game = gameRepository.getOne(gameId);
 
     if (game == null) {
-      return new ResponseEntity<>(makeMap("error:", "juego no encontrado"), HttpStatus.FORBIDDEN);
+      return new ResponseEntity<>(makeMap("error", " juego no encontrado"), HttpStatus.FORBIDDEN);
     }
     if (player == null) {
-      return new ResponseEntity<>(makeMap("error:", "jugador no encontrado"), HttpStatus.FORBIDDEN);
+      return new ResponseEntity<>(makeMap("error", " jugador no encontrado"), HttpStatus.FORBIDDEN);
     }
     int gamePlayersCount = game.getGamePlayers().size();
 
     if (gamePlayersCount == 1) {
       if (game.getOneGamePlayer().getPlayer().getUserName() == player.getUserName()) {
-        return new ResponseEntity<>(makeMap("error:", "El jugador ya se encuentra en el juego"), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(makeMap("error", " El jugador ya se encuentra en el juego"), HttpStatus.UNAUTHORIZED);
       } else {
         GamePlayer gamePlayer = gamePlayerRepository.save(new GamePlayer(game, player));
         return new ResponseEntity<>(makeMap("gpId", gamePlayer.getId()), HttpStatus.CREATED);
@@ -113,13 +113,14 @@ public class SalvoController {
             .collect(Collectors.toList());
   }
 
-
   private boolean isGuest(Authentication authentication) {
     return authentication == null || authentication instanceof AnonymousAuthenticationToken;
   }
+
   public static Map<String, Object> makeMap(String key, Object value){
     Map<String, Object> mp = new LinkedHashMap<String, Object>();
     mp.put(key, value);
     return mp;
   }
+
 }

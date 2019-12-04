@@ -118,12 +118,11 @@ function refreshGameView(){
 															 $('.oppCell').removeClass('caught--it');
 															 $('#salvoBlock').empty();
 															 waitState = false;
-
 															 setTimeout(function(){refreshGameView();}, 4000);
 													 })
 													 .fail(function (response) {
 															 console.log(response);
-															 $('#errorSalvo').text(response.responseText);
+															 $('#errorSalvo').text(JSON.parse(response.responseText).error);
 															 $('#errorSalvo').show( "slow" ).delay(4000).hide( "slow" );
 													 });
 							}
