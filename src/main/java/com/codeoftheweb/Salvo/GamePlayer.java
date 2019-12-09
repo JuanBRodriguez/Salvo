@@ -145,29 +145,25 @@ public class GamePlayer {
                         carrierDamage++;
                         carrierHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                        missedShots--;
                     } else if (battleshipLocation.contains(salvoShot)) {
                         battleshipDamage++;
                         battleshipHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                        missedShots--;
                     }else if (submarineLocation.contains(salvoShot)) {
                         submarineDamage++;
                         submarineHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                        missedShots--;
                     } else if (destroyerLocation.contains(salvoShot)) {
                         destroyerDamage++;
                         destroyerHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                        missedShots--;
                     }else if (patrolboatLocation.contains(salvoShot)) {
                         patrolboatDamage++;
                         patrolboatHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                        missedShots--;
                     }else {
                         missedCellsList.add(salvoShot);
+                        missedShots++;
                     }
                 }
                 damagesPerTurn.put("carrierHits", carrierHitsInTurn);

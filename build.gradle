@@ -12,6 +12,7 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 bootRun{
@@ -28,4 +29,5 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+	testCompile "org.mockito:mockito-core:2.+"
 }
