@@ -1,5 +1,11 @@
 package com.codeoftheweb.Salvo;
 
+import com.codeoftheweb.Salvo.Models.Game;
+import com.codeoftheweb.Salvo.Models.GamePlayer;
+import com.codeoftheweb.Salvo.Models.Player;
+import com.codeoftheweb.Salvo.Repositories.GamePlayerRepository;
+import com.codeoftheweb.Salvo.Repositories.GameRepository;
+import com.codeoftheweb.Salvo.Repositories.PlayerRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

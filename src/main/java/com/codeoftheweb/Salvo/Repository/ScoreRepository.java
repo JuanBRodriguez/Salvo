@@ -1,8 +1,9 @@
-package com.codeoftheweb.Salvo;
+package com.codeoftheweb.Salvo.Repository;
 
+import com.codeoftheweb.Salvo.Models.Score;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface SalvoRepository extends JpaRepository<Salvo, Long> {
+public interface ScoreRepository extends JpaRepository<Score, Long>{
 }
