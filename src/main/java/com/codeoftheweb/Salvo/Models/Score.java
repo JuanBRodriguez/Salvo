@@ -1,5 +1,7 @@
-package com.codeoftheweb.Salvo;
+package com.codeoftheweb.Salvo.Models;
 
+import com.codeoftheweb.Salvo.Models.Game;
+import com.codeoftheweb.Salvo.Models.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 

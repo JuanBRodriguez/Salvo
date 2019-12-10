@@ -1,5 +1,7 @@
 package com.codeoftheweb.Salvo;
 
+import com.codeoftheweb.Salvo.Models.*;
+import com.codeoftheweb.Salvo.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,11 +28,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootApplication
 @EnableSwagger2

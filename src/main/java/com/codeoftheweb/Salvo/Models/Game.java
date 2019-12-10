@@ -1,7 +1,6 @@
-package com.codeoftheweb.Salvo;
+package com.codeoftheweb.Salvo.Models;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
 import java.util.*;

@@ -1,5 +1,6 @@
-package com.codeoftheweb.Salvo;
+package com.codeoftheweb.Salvo.Models;
 
+import com.codeoftheweb.Salvo.GameState;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,18 +12,18 @@ import java.util.stream.Collectors;
 @Entity
 public class GamePlayer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator ="native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 
     private long id;
     private Date joinDate = new Date();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="game_id")
+    @JoinColumn(name = "game_id")
     private Game game;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="player_id")
+    @JoinColumn(name = "player_id")
     private Player player;
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
@@ -30,25 +31,31 @@ public class GamePlayer {
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvos;
+
     //
     public GamePlayer() {
         salvos = new HashSet<>();
         ships = new HashSet<>();
     }
+
     public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;
     }
+
     //
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
     }
+
     public void setGame(Game game) {
         this.game = game;
     }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
+
     public void setShips(Set<Ship> ships) {
         this.ships = ships;
     }
@@ -57,21 +64,26 @@ public class GamePlayer {
     public long getId() {
         return id;
     }
+
     public Date getJoinDate() {
         return joinDate;
     }
+
     @JsonIgnore
     public Game getGame() {
         return game;
     }
+
     @JsonIgnore
     public Player getPlayer() {
         return player;
     }
+
     @JsonIgnore
     public Set<Ship> getShips() {
         return ships;
     }
+
     @JsonIgnore
     public Set<Salvo> getSalvos() {
         return salvos;
@@ -100,9 +112,9 @@ public class GamePlayer {
 
     public Map<String, Object> getHits() {
         Map<String, Object> hits = new LinkedHashMap<String, Object>();
-        if (this.getGame().getGamePlayers().size()>1) {
-            hits.put("opponent", calcHits(this.getOppo()));
-        }else{
+        if (this.getGame().getGamePlayers().size() > 1) {
+            hits.put("opponent", calcHits(this.getOpponent()));
+        } else {
             hits.put("opponent", new ArrayList<>());
         }
 
@@ -111,7 +123,7 @@ public class GamePlayer {
     }
 
     private List<Map> calcHits(GamePlayer gamePlayer) {
-        List<Map> hits  = new ArrayList<>();
+        List<Map> hits = new ArrayList<>();
 
         int carrierDamage = 0;
         int battleshipDamage = 0;
@@ -119,20 +131,20 @@ public class GamePlayer {
         int destroyerDamage = 0;
         int patrolboatDamage = 0;
 
-        List <String> carrierLocation = getLocatiosShip("carrier",gamePlayer);
-        List <String> battleshipLocation = getLocatiosShip("battleship",gamePlayer);
-        List <String> submarineLocation = getLocatiosShip("submarine",gamePlayer);
-        List <String> destroyerLocation = getLocatiosShip("destroyer",gamePlayer);
-        List <String> patrolboatLocation = getLocatiosShip("patrolboat",gamePlayer);
-        if (gamePlayer.getGame().getGamePlayers().size()>1) {
-            for (Salvo salvo : gamePlayer.getOppo().getSalvos()) {
+        List<String> carrierLocation = getLocatiosShip("carrier", gamePlayer);
+        List<String> battleshipLocation = getLocatiosShip("battleship", gamePlayer);
+        List<String> submarineLocation = getLocatiosShip("submarine", gamePlayer);
+        List<String> destroyerLocation = getLocatiosShip("destroyer", gamePlayer);
+        List<String> patrolboatLocation = getLocatiosShip("patrolboat", gamePlayer);
+        if (gamePlayer.getGame().getGamePlayers().size() > 1) {
+            for (Salvo salvo : gamePlayer.getOpponent().getSalvos()) {
 
                 long carrierHitsInTurn = 0;
                 long battleshipHitsInTurn = 0;
                 long submarineHitsInTurn = 0;
                 long destroyerHitsInTurn = 0;
                 long patrolboatHitsInTurn = 0;
-                long missedShots = salvo.getLocations().size();
+                long missedShots = 0;
 
                 Map<String, Object> hitsMapPerTurn = new LinkedHashMap<>();
                 Map<String, Object> damagesPerTurn = new LinkedHashMap<>();
@@ -149,7 +161,7 @@ public class GamePlayer {
                         battleshipDamage++;
                         battleshipHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                    }else if (submarineLocation.contains(salvoShot)) {
+                    } else if (submarineLocation.contains(salvoShot)) {
                         submarineDamage++;
                         submarineHitsInTurn++;
                         hitCellsList.add(salvoShot);
@@ -157,11 +169,11 @@ public class GamePlayer {
                         destroyerDamage++;
                         destroyerHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                    }else if (patrolboatLocation.contains(salvoShot)) {
+                    } else if (patrolboatLocation.contains(salvoShot)) {
                         patrolboatDamage++;
                         patrolboatHitsInTurn++;
                         hitCellsList.add(salvoShot);
-                    }else {
+                    } else {
                         missedCellsList.add(salvoShot);
                         missedShots++;
                     }
@@ -189,7 +201,7 @@ public class GamePlayer {
     }
 
 
-    public List<Map<String, Object>> getAllSalvoes(Set <GamePlayer> gamePlayers) {
+    public List<Map<String, Object>> getAllSalvoes(Set<GamePlayer> gamePlayers) {
         return gamePlayers
                 .stream()
                 .flatMap(GP -> GP.getSalvos()
@@ -198,17 +210,74 @@ public class GamePlayer {
                 .collect(Collectors.toList());
     }
 
-    public GamePlayer getOppo() {
+    public GamePlayer getOpponent() {
         return this.getGame().getGamePlayers()
-                                .stream()
-                                .filter(gp -> gp.getId() != this.getId())
-                                .findFirst()
-                                .orElse(new GamePlayer());
+                .stream()
+                .filter(gp -> gp.getId() != this.getId())
+                .findFirst()
+                .orElse(new GamePlayer());
     }
 
-    private List<String>  getLocatiosShip(String type, GamePlayer gamePlayer){
-        return  gamePlayer.getShips().size()  ==  0 ? new ArrayList<>() : gamePlayer.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().get().getShipLocations();
+    private List<String> getLocatiosShip(String type, GamePlayer gamePlayer) {
+        return gamePlayer.getShips().size() == 0 ? new ArrayList<>() : gamePlayer.getShips().stream().filter(ship -> ship.getType().equals(type)).findFirst().get().getShipLocations();
     }
+
+    public GameState getGameState() {
+        int shipsQuantity = this.getShips().size();
+        int gamePlayersQuantity = this.getGame().getGamePlayers().size();
+
+        if (shipsQuantity == 0) {
+            return GameState.PLACESHIPS;
+        }
+        if (gamePlayersQuantity == 1) {
+            return GameState.WAITINGFOROPP;
+        }
+        if (gamePlayersQuantity == 2) {
+
+            GamePlayer opponentGp = this.getOpponent();
+            int opponentSalvosQuantity = opponentGp.getSalvos().size();
+            int salvosQuantity = this.getSalvos().size();
+
+            if ((salvosQuantity == opponentSalvosQuantity) && (getIfAllSunk(opponentGp, this)) && (!getIfAllSunk(this, opponentGp))) {
+                return GameState.WON;
+            }
+            if ((salvosQuantity == opponentSalvosQuantity) && (getIfAllSunk(opponentGp, this)) && (getIfAllSunk(this, opponentGp))) {
+                return GameState.TIE;
+            }
+            if ((salvosQuantity == opponentSalvosQuantity) && (!getIfAllSunk(opponentGp, this)) && (getIfAllSunk(this, opponentGp))) {
+                return GameState.LOST;
+            }
+
+            if ((salvosQuantity == opponentSalvosQuantity) && (this.getId() < opponentGp.getId())) {
+                return GameState.PLAY;
+            }
+            if (salvosQuantity < opponentSalvosQuantity) {
+                return GameState.PLAY;
+            }
+            if ((salvosQuantity == opponentSalvosQuantity) && (this.getId() > opponentGp.getId())) {
+                return GameState.WAIT;
+            }
+            if (salvosQuantity > opponentSalvosQuantity) {
+                return GameState.WAIT;
+            }
+
+        }
+
+        return GameState.UNDEFINED;
+    }
+
+    private Boolean getIfAllSunk(GamePlayer self, GamePlayer opponent) {
+
+        if (!opponent.getShips().isEmpty() && !self.getSalvos().isEmpty()) {
+            return opponent.getSalvos()
+                    .stream().flatMap(salvo -> salvo.getLocations().stream())
+                    .collect(Collectors.toList())
+                    .containsAll(self.getShips().stream().flatMap(ship -> ship.getShipLocations().stream())
+                            .collect(Collectors.toList()));
+        }
+        return false;
+    }
+
 }
 
 

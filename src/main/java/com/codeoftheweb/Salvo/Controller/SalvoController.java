@@ -1,4 +1,4 @@
-package com.codeoftheweb.Salvo;
+package com.codeoftheweb.Salvo.Controller;
 
 import com.codeoftheweb.Salvo.Models.Game;
 import com.codeoftheweb.Salvo.Models.GamePlayer;

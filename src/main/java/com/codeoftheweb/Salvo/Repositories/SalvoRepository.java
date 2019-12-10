@@ -1,4 +1,4 @@
-package com.codeoftheweb.Salvo.Repository;
+package com.codeoftheweb.Salvo.Repositories;
 
 import com.codeoftheweb.Salvo.Models.Salvo;
 import org.springframework.data.jpa.repository.JpaRepository;

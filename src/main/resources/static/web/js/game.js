@@ -24,8 +24,10 @@ function refreshGameView(){
 	console.log("Refresh");
 	$.ajax({
 		url: gpUrl, type: 'GET', success: function (data) {
+
 			gamePlayerData = data;
-			$('#gameStateBlock').html('<span class="gameStateLabel">TURN: </span><span class="gameStateLabelBig">' + getTurn(gamePlayerData) + '</span><span class="gameStateLabel"> ACTION REQUIRED: </span><span class="gameStateLabelBig">' + gamePlayerData.gameState + '</span>');
+            var gameState = gamePlayerData.gameState;
+            let gameStateMsj = "";
 
 			console.log("waitState: " + waitState);
 
@@ -35,11 +37,13 @@ function refreshGameView(){
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
 			}
 
-			if (gamePlayerData.gameState === "PLACESHIPS"){
+			if (gameState === "PLACESHIPS"){
+			        gameStateMsj = "PLACE SHIPS";
 					$('#placingShipsBoard').show('puff', 'slow');
 			}
 
-			if (gamePlayerData.gameState === "WAITINGFOROPP"){
+			if (gameState === "WAITINGFOROPP"){
+			        gameStateMsj = "WAITING FOR OPPONENT";
 					$('#battleGrids').show('puff', 'slow');
 					waitState = true;
 					setTimeout(
@@ -49,7 +53,8 @@ function refreshGameView(){
 							}, 5000);
 			}
 
-			if (gamePlayerData.gameState === "WON"){
+			if (gameState === "WON"){
+					gameStateMsj = "NOTHING, YEAH! YOU WON";
 					showSelf(gamePlayerData);
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
@@ -57,7 +62,8 @@ function refreshGameView(){
 					$('#gameRecordBlock').show('puff', 'slow');
 					console.log("yes you won");
 			}
-			if (gamePlayerData.gameState === "TIE"){
+			if (gameState === "TIE"){
+			        gameStateMsj = "NOTHING, GAME TIED";
 					showSelf(gamePlayerData);
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
@@ -65,7 +71,8 @@ function refreshGameView(){
 					$('#gameRecordBlock').show('puff', 'slow');
 					console.log("TIED MATCH");
 			}
-			if (gamePlayerData.gameState === "LOST"){
+			if (gameState === "LOST"){
+			        gameStateMsj = "NOTHING, GAME LOST";
 					showSelf(gamePlayerData);
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
 					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
@@ -73,7 +80,8 @@ function refreshGameView(){
 					$('#gameRecordBlock').show('puff', 'slow');
 					console.log("OH YOU LOST");
 			}
-			if (gamePlayerData.gameState === "WAIT"){
+			if (gameState === "WAIT"){
+					gameStateMsj = "WAIT FOR THE ENEMY TO SHOOT";
 					$('#battleGrids').show('puff', 'slow');
 					$('#salvoBlock').hide('puff', 'slow');
 					$('#gameRecordBlock').show('puff', 'slow');
@@ -84,7 +92,8 @@ function refreshGameView(){
 									console.log("...refreshing gameview...");
 							}, 5000);
 			}
-			if (gamePlayerData.gameState == "PLAY"){
+			if (gameState == "PLAY"){
+			        gameStateMsj = "PLAY";
 				    console.log("Play");
 					showSelf(gamePlayerData);
 					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
@@ -132,6 +141,13 @@ function refreshGameView(){
 					$('#salvoBlock').show('puff', 'slow');
 					$('#gameRecordBlock').show('puff', 'slow');
 			}
+
+			let stateHtml = '<span class="gameStateLabel">'+ "TURN: "+ '</span><span class="gameStateLabelBig"> ';
+            			    stateHtml += getTurn(gamePlayerData)+ "  " + '</span><span class="gameStateLabel">';
+            			    stateHtml += 'ACTION REQUIRED: ' + '</span><span class="gameStateLabelBig">';
+            			    stateHtml += gameStateMsj + '</span>';
+
+            $('#gameStateBlock').html(stateHtml);
 		},
 		error: function (e) {
 			console.log(e);
