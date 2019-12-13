@@ -20,134 +20,133 @@ window.addEventListener('load', function () {
 });
 
 // refresco total
-function refreshGameView(){
+function refreshGameView() {
 	console.log("Refresh");
 	$.ajax({
 		url: gpUrl, type: 'GET', success: function (data) {
 
 			gamePlayerData = data;
-            var gameState = gamePlayerData.gameState;
-            let gameStateMsj = "";
+			var gameState = gamePlayerData.gameState;
+			let gameStateMsj = "";
 
 			console.log("waitState: " + waitState);
 
 			if (waitState === false) {
-					showSelf(gamePlayerData);
-					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
-					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
+				showSelf(gamePlayerData);
+				makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
+				makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
 			}
 
-			if (gameState === "PLACESHIPS"){
-			        gameStateMsj = "PLACE SHIPS";
-					$('#placingShipsBoard').show('puff', 'slow');
+			if (gameState === "PLACESHIPS") {
+				gameStateMsj = "PLACE SHIPS";
+				$('#placingShipsBoard').show('puff', 'slow');
 			}
 
-			if (gameState === "WAITINGFOROPP"){
-			        gameStateMsj = "WAITING FOR OPPONENT";
-					$('#battleGrids').show('puff', 'slow');
-					waitState = true;
-					setTimeout(
-							function(){ 
-								refreshGameView();
-								console.log("...refreshing gameview...");
-							}, 5000);
+			if (gameState === "WAITINGFOROPP") {
+				gameStateMsj = "WAITING FOR OPPONENT";
+				$('#battleGrids').show('puff', 'slow');
+				waitState = true;
+				setTimeout(
+					function () {
+						refreshGameView();
+						console.log("...refreshing gameview...");
+					}, 5000);
 			}
 
-			if (gameState === "WON"){
-					gameStateMsj = "NOTHING, YEAH! YOU WON";
-					showSelf(gamePlayerData);
-					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
-					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
-					$('#battleGrids').show('puff', 'slow');
-					$('#gameRecordBlock').show('puff', 'slow');
-					console.log("yes you won");
+			if (gameState === "WON") {
+				gameStateMsj = "NOTHING, YEAH! YOU WON";
+				showSelf(gamePlayerData);
+				makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
+				makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
+				$('#battleGrids').show('puff', 'slow');
+				$('#gameRecordBlock').show('puff', 'slow');
+				console.log("yes you won");
 			}
-			if (gameState === "TIE"){
-			        gameStateMsj = "NOTHING, GAME TIED";
-					showSelf(gamePlayerData);
-					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
-					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
-					$('#battleGrids').show('puff', 'slow');
-					$('#gameRecordBlock').show('puff', 'slow');
-					console.log("TIED MATCH");
+			if (gameState === "TIE") {
+				gameStateMsj = "NOTHING, GAME TIED";
+				showSelf(gamePlayerData);
+				makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
+				makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
+				$('#battleGrids').show('puff', 'slow');
+				$('#gameRecordBlock').show('puff', 'slow');
+				console.log("TIED MATCH");
 			}
-			if (gameState === "LOST"){
-			        gameStateMsj = "NOTHING, GAME LOST";
-					showSelf(gamePlayerData);
-					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
-					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
-					$('#battleGrids').show('puff', 'slow');
-					$('#gameRecordBlock').show('puff', 'slow');
-					console.log("OH YOU LOST");
+			if (gameState === "LOST") {
+				gameStateMsj = "NOTHING, GAME LOST";
+				showSelf(gamePlayerData);
+				makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
+				makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
+				$('#battleGrids').show('puff', 'slow');
+				$('#gameRecordBlock').show('puff', 'slow');
+				console.log("OH YOU LOST");
 			}
-			if (gameState === "WAIT"){
-					gameStateMsj = "WAIT FOR THE ENEMY TO SHOOT";
-					$('#battleGrids').show('puff', 'slow');
-					$('#salvoBlock').hide('puff', 'slow');
-					$('#gameRecordBlock').show('puff', 'slow');
-					waitState = true;
-					setTimeout( function()
-							{
-									refreshGameView();
-									console.log("...refreshing gameview...");
-							}, 5000);
+			if (gameState === "WAIT") {
+				gameStateMsj = "WAIT FOR THE ENEMY TO SHOOT";
+				$('#battleGrids').show('puff', 'slow');
+				$('#salvoBlock').hide('puff', 'slow');
+				$('#gameRecordBlock').show('puff', 'slow');
+				waitState = true;
+				setTimeout(function () {
+					refreshGameView();
+					console.log("...refreshing gameview...");
+				}, 5000);
 			}
-			if (gameState == "PLAY"){
-			        gameStateMsj = "PLAY";
-				    console.log("Play");
-					showSelf(gamePlayerData);
-					makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
-					makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
+			if (gameState == "PLAY") {
+				gameStateMsj = "PLAY";
+				console.log("Play");
+				showSelf(gamePlayerData);
+				makeGameRecordTable(gamePlayerData.hits.opponent, "gameRecordOppTable");
+				makeGameRecordTable(gamePlayerData.hits.self, "gameRecordSelfTable");
 
-					$('#salvoBlock').html('<div class="drag-zone">\n' +
-							'                <div class="droppable salvoCharger caught--it" id="salvoout1"><div class="draggable" id="salvo1"></div></div>\n' +
-							'                <div class="droppable salvoCharger caught--it" id="salvoout2"><div class="draggable" id="salvo2"></div></div>\n' +
-							'                <div class="droppable salvoCharger caught--it" id="salvoout3"><div class="draggable" id="salvo3"></div></div>\n' +
-							'                <div class="droppable salvoCharger caught--it" id="salvoout4"><div class="draggable" id="salvo4"></div></div>\n' +
-							'                <div class="droppable salvoCharger caught--it" id="salvoout5"><div class="draggable" id="salvo5"></div></div>\n' +
-							'                <div class="textCenter"><button class="btn btn-warning" id="postSalvo">Fire Salvo!</button></div>\n' +
-							'            </div>');
+				$('#salvoBlock').html('<div class="drag-zone">\n' +
+					'                <div class="droppable salvoCharger caught--it" id="salvoout1"><div class="draggable" id="salvo1"></div></div>\n' +
+					'                <div class="droppable salvoCharger caught--it" id="salvoout2"><div class="draggable" id="salvo2"></div></div>\n' +
+					'                <div class="droppable salvoCharger caught--it" id="salvoout3"><div class="draggable" id="salvo3"></div></div>\n' +
+					'                <div class="droppable salvoCharger caught--it" id="salvoout4"><div class="draggable" id="salvo4"></div></div>\n' +
+					'                <div class="droppable salvoCharger caught--it" id="salvoout5"><div class="draggable" id="salvo5"></div></div>\n' +
+					'                <div class="textCenter"><button class="btn btn-warning" id="postSalvo">Fire Salvo!</button></div>\n' +
+					'            </div>');
 
-					resetSalvoCellIds();
+				resetSalvoCellIds();
 
-					$('#postSalvo').click(function () {
-							makeSalvoJSON();
-							if (salvoPositions.length === 0){
-									$('#errorSalvo').text("Error! No salvos to fire! You must set at least one target!");
-									$('#errorSalvo').show( "slow" ).delay(3000).hide( "slow" );
-									console.log("No salvos to shoot!");
-							} else {
-									 let postUrl ='/api/games/players/' +getParameterByName("gp") + '/salvoes';
-									 $.post({url: postUrl, data: salvoJSON, dataType: "text", contentType: "application/json"})
-													 .done(function (response) {
-															 console.log(response);
-															 $('#okSalvo').text(JSON.parse(response).OK);
-															 $('#okSalvo').show( "slow" ).delay(3000).hide( "slow" );
-															 $('#salvoBlock').hide("slow");
-															 $('.oppCell').removeClass('caught--it');
-															 $('#salvoBlock').empty();
-															 waitState = false;
-															 setTimeout(function(){refreshGameView();}, 4000);
-													 })
-													 .fail(function (response) {
-															 console.log(response);
-															 $('#errorSalvo').text(JSON.parse(response.responseText).error);
-															 $('#errorSalvo').show( "slow" ).delay(4000).hide( "slow" );
-													 });
-							}
-					});
+				$('#postSalvo').click(function () {
+					makeSalvoJSON();
+					if (salvoPositions.length === 0) {
+						$('#errorSalvo').text("Error! No salvos to fire! You must set at least one target!");
+						$('#errorSalvo').show("slow").delay(3000).hide("slow");
+						console.log("No salvos to shoot!");
+					} else {
+						let postUrl = '/api/games/players/' + getParameterByName("gp") + '/salvoes';
+						$.post({ url: postUrl, data: salvoJSON, dataType: "text", contentType: "application/json" })
+							.done(function (response) {
+								console.log(response);
+								$('#okSalvo').text(JSON.parse(response).OK);
+								$('#okSalvo').show("slow").delay(3000).hide("slow");
+								$('#salvoBlock').hide("slow");
+								$('.oppCell').removeClass('caught--it');
+								$('#salvoBlock').empty();
+								waitState = false;
+								setTimeout(function () { refreshGameView(); }, 4000);
+							})
+							.fail(function (response) {
+								console.log(response);
+								$('#errorSalvo').text(JSON.parse(response.responseText).error);
+								$('#errorSalvo').show("slow").delay(4000).hide("slow");
+							});
+					}
+				});
 
-					$('#battleGrids').show('puff', 'slow');
-					$('#salvoBlock').show('puff', 'slow');
-					$('#gameRecordBlock').show('puff', 'slow');
+				$('#battleGrids').show('puff', 'slow');
+				$('#salvoBlock').show('puff', 'slow');
+				$('#gameRecordBlock').show('puff', 'slow');
 			}
 
-			let stateHtml = '<span class="gameStateLabel">'+ "TURN: "+ '</span><span class="gameStateLabelBig"> ';
-            			    stateHtml += getTurn(gamePlayerData)+ "  " + '</span><span class="gameStateLabel">';
-            			    stateHtml += 'ACTION REQUIRED: ' + '</span><span class="gameStateLabelBig">';
-            			    stateHtml += gameStateMsj + '</span>';
+			let stateHtml = '<span class="gameStateLabel">' + "TURN: " + '</span><span class="gameStateLabelBig"> ';
+			stateHtml += getTurn(gamePlayerData) + "  " + '</span><span class="gameStateLabel">';
+			stateHtml += 'ACTION REQUIRED: ' + '</span><span class="gameStateLabelBig">';
+			stateHtml += gameStateMsj + '</span>';
 
-            $('#gameStateBlock').html(stateHtml);
+			$('#gameStateBlock').html(stateHtml);
 		},
 		error: function (e) {
 			console.log(e);
@@ -171,8 +170,8 @@ function desloguear() {
 }
 
 function makePostUrl() {
-    var gamePlayerID =  getParameterByName("gp");
-    return '/api/games/players/' + gamePlayerID + '/ships';
+	var gamePlayerID = getParameterByName("gp");
+	return '/api/games/players/' + gamePlayerID + '/ships';
 }
 function makePostUrlShips() {
 	var gamePlayerID = getParameterByName();
@@ -237,15 +236,15 @@ function showSelf(gamePlayerData) {
 				console.log("Your salvo on " + location);
 				$(cellID).text(salvo.turn);
 			} else { */
-				cellID = "#p1_" + location;
-				if ($(cellID).hasClass("shipCell")) {
-					$(cellID).addClass("hitCell");
-					console.log("Opponent Hits Ship on " + location);
-				} else {
-					$(cellID).addClass("salvoCellSelf");
-					$(cellID).text(salvo.turn);
-					//console.log("Opponent salvo on " + location);
-				}
+			cellID = "#p1_" + location;
+			if ($(cellID).hasClass("shipCell")) {
+				$(cellID).addClass("hitCell");
+				console.log("Opponent Hits Ship on " + location);
+			} else {
+				$(cellID).addClass("salvoCellSelf");
+				$(cellID).text(salvo.turn);
+				//console.log("Opponent salvo on " + location);
+			}
 			//}
 		});
 	});
@@ -257,11 +256,11 @@ function showSelf(gamePlayerData) {
 			$(cellID).removeClass("droppable");
 		});
 		playTurn.locationsMissed.forEach(function (hitCell) {
-        			cellID = "#" + hitCell;
-        			$(cellID).addClass("salvoCell");
-        			$(cellID).text(playTurn.turn);
-        			$(cellID).removeClass("droppable");
-        });
+			cellID = "#" + hitCell;
+			$(cellID).addClass("salvoCell");
+			$(cellID).text(playTurn.turn);
+			$(cellID).removeClass("droppable");
+		});
 	});
 }
 
@@ -314,22 +313,8 @@ function createTable(player) {
 
 
 function displayOverlay(text) {
-	$("<table id='overlay'><tbody><tr><td>" + text + "<br><button class='btn btn-info' onclick='removeOverlay()'>Ok! I got it.</button> </td></tr></tbody></table>").css({
-		"position": "absolute",
-		"margin": "auto",
-		"top": "0",
-		"right": "0",
-		"left": "0",
-		"bottom": "0",
-		"width": "80%",
-		"height": "200px",
-		"background-color": "rgba(255,0,0,.89)",
-		"z-index": "10000",
-		"vertical-align": "middle",
-		"text-align": "center",
-		"color": "#fff",
-		"font-size": "24px"
-	}).appendTo(".gridShips").show("slow");
+	$("<table id='overlay'><tbody><tr><td>" + text + "<br><button class='btn btn-info' onclick='removeOverlay()'>Ok! I got it.</button> </td></tr></tbody></table>")
+		.appendTo(".gridShips").show("slow");
 }
 
 function removeOverlay() {
@@ -355,7 +340,7 @@ function makeSalvoJSON() {
 		salvoPositions.push(salvo5cellID);
 	}
 
-	salvoJSON = JSON.stringify({locations: salvoPositions});
+	salvoJSON = JSON.stringify({ locations: salvoPositions });
 	console.log(salvoJSON);
 }
 
