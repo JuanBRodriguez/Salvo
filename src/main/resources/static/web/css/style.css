@@ -1,6 +1,13 @@
 body {
-    background: url(../img/back2.jpg);
-    font-family: 'Dosis', sans-serif;
+    background: url(../img/wallpaper_world.jpg);
+    font-family: 'Permanent Marker',cursive , 'Dosis', sans-serif;
+}
+
+h2{
+    text-decoration: underline;
+}
+table{
+    opacity: 0.7 !important;
 }
 
 .bannerTitle {
@@ -8,6 +15,14 @@ body {
     background: #00000038;
     /* border-top-left-radius: 20px;
     border-top-right-radius: 20px;*/
+}
+.logo{
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    opacity: 0.8;
+    width: 30%;
+    height: 30%;
+    float: left;
 }
 
 .blockInline {
@@ -379,6 +394,10 @@ button:focus {
 
 #loginBlock {
     margin-top: 10px;
+    float: right;
+}
+#deslogueo{
+    text-align: right;
 }
 
 .currentPlayerContainer {

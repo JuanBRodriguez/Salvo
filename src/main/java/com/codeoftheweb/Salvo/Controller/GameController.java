@@ -80,7 +80,6 @@ public class GameController {
             Score score = new Score(player, gamePlayer.getGame(), 0.0, new Date());
             scoreRepository.save(score);
         }
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
